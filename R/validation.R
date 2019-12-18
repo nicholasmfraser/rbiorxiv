@@ -1,6 +1,7 @@
 # Here we validate arguments for our query functions
 validate_args <- function(from = NULL, to = NULL, interval = NULL, doi = NULL,
-                          format = NULL, skip = NULL, limit = NULL, ...) {
+                          format = NULL, skip = NULL, limit = NULL, prefix = NULL,
+                          ...) {
 
   # Validate individual arguments
   if(!is.null(from)) validate_from(from)
@@ -10,6 +11,7 @@ validate_args <- function(from = NULL, to = NULL, interval = NULL, doi = NULL,
   if(!is.null(format)) validate_format(format)
   if(!is.null(skip)) validate_skip(skip)
   if(!is.null(limit)) validate_limit(limit)
+  if(!is.null(prefix)) validate_prefix(prefix)
 
 
   # combined validation rules
@@ -63,6 +65,13 @@ validate_limit <- function(limit) {
   check_length(limit, "limit")
   if(limit != "*") {
     check_number(limit, "limit")
+  }
+}
+
+validate_prefix <- function(prefix) {
+  check_length(prefix, "prefix")
+  if(!grepl("^10.\\d{4,9}$", prefix)) {
+    stop("Invalid DOI prefix. Check DOI prefix is valid in format 10.XXXXX")
   }
 }
 

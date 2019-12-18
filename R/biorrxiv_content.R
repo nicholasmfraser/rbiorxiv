@@ -17,9 +17,9 @@ biorrxiv_content <- function(from = NULL, to = NULL, doi = NULL,
     if(limit == "*") {
       limit <- total_results - skip
     }
-    if(limit < count_results) {
+    if(limit <= count_results) {
       data <- content$collection[1:limit]
-    } else if (limit == count_results) {
+    } else if (count_results == total_results) {
       data <- content$collection
     } else {
       data <- content$collection
