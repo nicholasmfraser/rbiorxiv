@@ -19,13 +19,29 @@ biorrxiv_content <- function(from = NULL, to = NULL, doi = NULL,
   if(query_type == "doi") {
     d <- query_doi(doi)
   } else {
-    results_per_page <- 100
-    iterations <- ceiling(limit/results_per_page)
+
+    # This section doesn't work (e.g if limit < 100).....
     d <- list()
-    for(i in 1:iterations) {
-      cursor <- ((i-1) * results_per_page) + skip
-      results <- query_interval(from, to, cursor)
-      d <- c(d, results)
+    results_per_page <- 100
+    cursor <- skip
+
+    # Make initial query
+    results <- query_interval(from, to, cursor)
+    count_results <- results$messages[[1]]$count
+    total_results <- results$messages[[1]]$total
+    d <- c(d, results$collection)
+
+    if(limit == "*") {
+      limit <- total_results
+    }
+
+    if(limit > count_results) {
+      iterations <- ceiling(limit/results_per_page) - 1
+      for(i in 1:iterations) {
+        cursor <- skip + (i * results_per_page)
+        results <- query_interval(from, to, cursor)
+        d <- c(d, results$collection)
+      }
     }
   }
   return_data(d, format)
@@ -52,6 +68,6 @@ query_interval <- function(from, to, cursor) {
   # Handle response
   handle_response(r)
   # Retrieve data from request body
-  d <- httr::content(r, as="parsed")$collection
+  d <- httr::content(r, as="parsed")
   return(d)
 }

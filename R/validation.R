@@ -57,7 +57,9 @@ validate_skip <- function(skip) {
 
 validate_limit <- function(limit) {
   check_length(limit, "limit")
-  check_number(limit, "limit")
+  if(limit != "*") {
+    check_number(limit, "limit")
+  }
 }
 
 check_length <- function(arg, name) {
