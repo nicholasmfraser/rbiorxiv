@@ -1,11 +1,19 @@
 Package: biorrxiv
 Type: Package
-Title: What the Package Does (Title Case)
+Title: R client for the bioRxiv API
 Version: 0.1.0
-Author: Who wrote it
+Authors@R: person("Nicholas", "Fraser", email = "nicholasmfraser@gmail.com")
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: biorrxiv is an R client for interacting with the bioRxiv API
+    (https://api.biorxiv.org/). Functions include retrieving metadata of
+    preprints, details of published papers associated with preprints, and
+    summary and usage statistics. Note that the bioRxiv API is currently
+    in beta development, and thus subject to change.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/nicholasmfraser/biorrxiv
+BugReports: https://github.com/nicholasmfraser/biorrxiv/issues
+Imports:
+    httr (>= 1.4)
+    jsonlite (>= 1.5),
