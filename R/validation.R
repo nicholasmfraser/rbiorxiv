@@ -11,6 +11,10 @@ validate_args <- function(from = NULL, to = NULL, interval = NULL, doi = NULL,
   if(!is.null(skip)) validate_skip(skip)
   if(!is.null(limit)) validate_limit(limit)
 
+
+  # combined validation rules
+  # from date should be before to date
+  # skip not more than limit?
 }
 
 validate_from <- function(from) {
@@ -41,11 +45,11 @@ validate_doi <- function(doi) {
   }
 }
 
-# Validate format. Must always be one of "list", "json" or "dataframe"
+# Validate format. Must always be one of "list", "json" or "df"
 validate_format <- function(format) {
   check_length(format, "format")
-  if(!format %in% c("list", "json", "dataframe")) {
-    stop('"format" argument must be one of "list", "json" or "dataframe"',
+  if(!format %in% c("list", "json", "df")) {
+    stop('"format" argument must be one of "list", "json" or "df"',
          call. = F)
   }
 }
