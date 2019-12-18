@@ -1,7 +1,7 @@
 # Handle HTTP responses
 handle_response <- function(r) {
   if(r$status_code == 200) {
-    status <- httr::content(r, as="parsed")$messages[[1]]$status
+    status <- unlist(httr::content(r, as="parsed")$messages)["status"]
     if(status != "ok") {
       stop(status, call. = F)
     } else {

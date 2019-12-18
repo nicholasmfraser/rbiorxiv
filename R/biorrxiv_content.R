@@ -12,7 +12,7 @@ biorrxiv_content <- function(from = NULL, to = NULL, doi = NULL,
     stop("'doi' cannot be specified with 'from' or 'to' arguments")
   }
 
-  # Validate individual function arguments
+  # Validate arguments
   validate_args(from = from, to = to, doi = doi,
                 limit = limit, skip = skip, format = format)
 
