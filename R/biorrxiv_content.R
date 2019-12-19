@@ -1,4 +1,45 @@
-# TO DO: add support for xml?
+#' Retrieve details of bioRxiv preprints
+#'
+#' @export
+#' @param from (date) The date from when details of bioRxiv preprints should
+#' be collected. Date must be supplied in `YYYY-MM-DD` format. Default: `NULL`
+#' @param to (date) The date until when details of bioRxiv preprints should
+#' be collected. Date must be supplied in `YYYY-MM-DD` format. Default: `NULL`
+#' @param doi (character) A single digital object identifier (DOI) of a
+#' bioRxiv preprint. `doi` cannot be used with `from` and `to` arguments.
+#' Default: `NULL`
+#' @param limit (integer) The maximum number of results to return. Not
+#' relevant when querying a doi. Default: `100`
+#' @param skip (integer) The number of results to skip in a query.
+#' Default: `0`
+#' @param format (character) Return data in list `list`, json `json` or data
+#' frame `df` format. Default: `list`
+#'
+#' @section Beware:
+#' Querying for a DOI will only work for DOIs associated with bioRxiv
+#'
+#' @examples \dontrun{
+#'
+#' # Get details of preprints deposited between 2018-01-01 and 2018-01-10
+#' # By default, only the first 100 records are returned
+#' biorrxiv_content(from = "2018-01-01", to = "2018-01-10")
+#'
+#' # Set a limit to return more than 100 records
+#' biorrxiv_content(from = "2018-01-01", to = "2018-01-10", limit = 200)
+#'
+#' # Set limit as "*" to return all records
+#' biorrxiv_content(from = "2018-01-01", to = "2018-01-10", limit = "*")
+#'
+#' # Skip the first 100 records
+#' biorrxiv_content(from = "2018-01-01", to = "2018-01-10",
+#'                  limit = 200, skip = 100)
+#'
+#' # Specify the format to return data
+#' biorrxiv_content(from = "2018-01-01", to = "2018-01-10", format = "df")
+#'
+#' # Lookup a preprint by DOI
+#' biorrxiv_content(doi = "10.1101/833400")
+#' }
 
 biorrxiv_content <- function(from = NULL, to = NULL, doi = NULL,
                              limit = 100, skip = 0, format = "list", ...) {

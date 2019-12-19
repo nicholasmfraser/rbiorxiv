@@ -1,13 +1,13 @@
 #' Retrieve summary statistics for usage of bioRxiv content
 #'
 #' @export
-#'
-#' @param interval (character) Return either monthly `m` or yearly `y` data.
+#'@param interval (character) Return either monthly `m` or yearly `y` data.
 #' Default: `m`
 #' @param format (character) Return data in list `list`, json `json` or data
 #' frame `df` format. Default: `list`
 #'
-#' @examples
+#' @examples \dontrun{
+#'
 #' # Return a list of monthly usage statistics
 #' biorrxiv_usage(interval = "m")
 #'
@@ -16,7 +16,7 @@
 #'
 #' # Return annual usage statistics
 #' biorrxiv_usage(interval = "y")
-#'
+#' }
 
 biorrxiv_usage <- function(interval = "m", format = "list", ...) {
   validate_args(interval = interval, format = format)

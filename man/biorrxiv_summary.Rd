@@ -7,16 +7,18 @@
 biorrxiv_summary(interval = "m", format = "list", ...)
 }
 \arguments{
-\item{interval}{(character) Return either monthly `m` or yearly `y` data.
-Default: `m`}
+\item{interval}{(character) Return either monthly \code{m} or yearly \code{y} data.
+Default: \code{m}}
 
-\item{format}{(character) Return data in list `list`, json `json` or data
-frame `df` format. Default: `list`}
+\item{format}{(character) Return data in list \code{list}, json \code{json} or data
+frame \code{df} format. Default: \code{list}}
 }
 \description{
 Retrieve summary statistics for deposits of bioRxiv content
 }
 \examples{
+\dontrun{
+
 # Return a list of monthly deposit statistics
 biorrxiv_summary(interval = "m")
 
@@ -25,5 +27,5 @@ biorrxiv_summary(interval = "m", format = "df")
 
 # Return annual deposit statistics
 biorrxiv_summary(interval = "y")
-
+}
 }

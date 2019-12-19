@@ -1,13 +1,13 @@
 #' Retrieve summary statistics for deposits of bioRxiv content
 #'
 #' @export
-#'
 #' @param interval (character) Return either monthly `m` or yearly `y` data.
 #' Default: `m`
 #' @param format (character) Return data in list `list`, json `json` or data
 #' frame `df` format. Default: `list`
 #'
-#' @examples
+#' @examples \dontrun{
+#'
 #' # Return a list of monthly deposit statistics
 #' biorrxiv_summary(interval = "m")
 #'
@@ -16,7 +16,7 @@
 #'
 #' # Return annual deposit statistics
 #' biorrxiv_summary(interval = "y")
-#'
+#' }
 
 biorrxiv_summary <- function(interval = "m", format = "list", ...) {
   validate_args(interval = interval, format = format)
