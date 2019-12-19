@@ -127,7 +127,8 @@ biorrxiv_summary(interval = "m", format = "df") %>%
        title ="Growth of bioRxiv over time") +
   scale_x_date(date_breaks = "3 months",
                date_minor_breaks = "3 months",
-               date_labels = "%b-%y") +
+               date_labels = "%b-%y",
+               expand = c(0,0)) +
   theme_minimal() +
   theme(
     axis.text.x = element_text(angle = 90, vjust = 0.5),
