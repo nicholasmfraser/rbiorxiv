@@ -49,6 +49,45 @@ data_to_json <- function(data) {
 # Parse data to data frame
 data_to_df <- function(data) {
   df <- do.call(rbind, lapply(data, as.data.frame))
-  # TO DO: Check column types
+  df <- set_column_types(df)
+  return(df)
+}
+
+set_column_types <- function(df) {
+  # character columns
+  cols_c <- c(
+    "abstract",
+    "author_corresponding",
+    "author_corresponding_institution",
+    "authors",
+    "category",
+    "doi",
+    "published",
+    "title")
+
+  # numeric columns
+  cols_n <- c(
+    "version"
+  )
+
+  #date columns
+  cols_d <- c(
+    "date"
+  )
+
+  to_numeric <- function(column) {
+    return(as.numeric(as.character(column)))
+  }
+  to_date <- function(column) {
+    # For now keep dates as character vector - can adjust this later
+    return(as.character(column))
+  }
+
+  df[,colnames(df) %in% cols_c] <- sapply(df[,colnames(df) %in% cols_c],
+                                          as.character)
+  df[,colnames(df) %in% cols_n] <- sapply(df[,colnames(df) %in% cols_n],
+                                          to_numeric)
+  df[,colnames(df) %in% cols_d] <- sapply(df[,colnames(df) %in% cols_d],
+                                          to_date)
   return(df)
 }
