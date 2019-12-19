@@ -113,17 +113,17 @@ biorrxiv_usage(interval = "m")
 
 library(tidyverse)
 
-# Plot the cumulative number of papers deposited per month
+# Plot the cumulative number of new preprints deposited per month
 # Note that month dates are returned in YYYY-MM format - here we convert
 # month dates to YYYY-MM-DD format before plotting
 biorrxiv_summary(interval = "m", format = "df") %>%
   mutate(month = as.Date(paste0(month, "-01", format = "%Y-%m-%d"))) %>%
   ggplot() +
   geom_bar(aes(x = month, y = new_papers_cumulative),
-           fill = "grey75",
+           fill = "#cccccc",
            stat = "identity") +
   labs(x = "",
-       y= "Cumulative preprints deposited",
+       y= "New preprints deposited (cumulative)",
        title ="Growth of bioRxiv over time") +
   scale_x_date(date_breaks = "3 months",
                date_minor_breaks = "3 months",
