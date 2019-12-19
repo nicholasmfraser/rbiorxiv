@@ -7,22 +7,22 @@ base_url <- function() {
 fetch_content <- function(url) {
   request <- httr::GET(url = url)
   handle_response(request = request)
-  content <- httr::content(request, as="parsed")
+  content <- httr::content(request, as = "parsed")
   return(content)
 }
 
 # Handle HTTP responses
 handle_response <- function(request) {
-  if(request$status_code == 200) {
-    status <- unlist(httr::content(request, as="parsed")$messages)["status"]
-    if(status != "ok") {
+  if (request$status_code == 200) {
+    status <- unlist(httr::content(request, as = "parsed")$messages)["status"]
+    if (status != "ok") {
       stop(status, call. = F)
     } else {
       return()
     }
-  } else if(request$status_code == 404) {
+  } else if (request$status_code == 404) {
     stop("404: Page not found", call. = F)
-  } else if(request$status_code == 500) {
+  } else if (request$status_code == 500) {
     stop("500: Internal server error", call. = F)
   } else if (request$status_code == 400) {
     stop("400: Bad request", call. = F)
@@ -33,7 +33,7 @@ handle_response <- function(request) {
 
 # Return the data in the requested format
 return_data <- function(data, format) {
-  if(format == "list") {
+  if (format == "list") {
     return(data)
   } else if (format == "json") {
     json <- data_to_json(data = data)
@@ -112,11 +112,11 @@ set_column_types <- function(df) {
     return(as.character(column))
   }
 
-  df[,colnames(df) %in% cols_c] <- sapply(df[,colnames(df) %in% cols_c],
+  df[, colnames(df) %in% cols_c] <- sapply(df[ , colnames(df) %in% cols_c],
                                           to_character)
-  df[,colnames(df) %in% cols_n] <- sapply(df[,colnames(df) %in% cols_n],
+  df[, colnames(df) %in% cols_n] <- sapply(df[, colnames(df) %in% cols_n],
                                           to_numeric)
-  df[,colnames(df) %in% cols_d] <- sapply(df[,colnames(df) %in% cols_d],
+  df[, colnames(df) %in% cols_d] <- sapply(df[, colnames(df) %in% cols_d],
                                           to_date)
   return(df)
 }

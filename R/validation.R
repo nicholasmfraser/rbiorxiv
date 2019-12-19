@@ -34,7 +34,7 @@ validate_args <- function(from = NULL, to = NULL, interval = NULL,
 
 # Validate arguments
 validate <- function(arg, name, rules) {
-  if(!is.null(arg)) {
+  if (!is.null(arg)) {
     sapply(rules,
            function(rule, arg, name) do.call(paste0("check_", rule),
                                              list(arg, name)), arg, name)
@@ -49,7 +49,7 @@ check_date <- function(arg, name) {
                                 "' date. Must be in YYYY-MM-DD format"),
                          call. = F)
                   })
-  if(!try) {
+  if (!try) {
     stop(paste0("Invalid '", name, "', must be format YYYY-MM-DD"),
          call. = F)
   }
@@ -58,20 +58,20 @@ check_date <- function(arg, name) {
 check_doi <- function(arg, name) {
   # See https://www.crossref.org/blog/dois-and-matching-regular-expressions/
   # Seems to work fine with bioRxiv DOIs
-  if(!grepl("^10.1101\\/[-._;()\\/:A-Z0-9]+$", doi)) {
+  if (!grepl("^10.1101\\/[-._;()\\/:A-Z0-9]+$", doi)) {
     stop("Invalid '", name, "', must be in format '10.1101/XXXXXX'",
          call. = F)
   }
 }
 
 check_empty <- function(arg, name) {
-  if(arg == "") {
+  if (arg == "") {
     stop(paste0("Invalid '", name, "', value cannot be empty."), call. = F)
   }
 }
 
 check_format <- function(arg, name) {
-  if(!arg %in% c("list", "json", "df")) {
+  if (!arg %in% c("list", "json", "df")) {
     stop("Invalid '", name, "', must be one of 'list', 'json' or 'df'",
          call. = F)
   }
@@ -79,13 +79,13 @@ check_format <- function(arg, name) {
 
 check_integer <- function(arg, name) {
   # ignore validation when limit = "*"
-  if(name != "limit" & arg != "*") {
+  if (name != "limit" & arg != "*") {
     try <- tryCatch(!is.na(as.integer(arg)),
                     error = function(e) {
-                      stop(paste0("Invalid '", name, "', must be an integer value"),
-                           call. = F)
+                      stop(paste0("Invalid '", name, "',
+                                  must be an integer value"), call. = F)
                     })
-    if(!try) {
+    if (!try) {
       stop(paste0("Invalid '", name, "', must be an integer value"),
            call. = F)
     }
@@ -93,20 +93,20 @@ check_integer <- function(arg, name) {
 }
 
 check_interval <- function(arg, name) {
-  if(!arg %in% c("m", "y")) {
+  if (!arg %in% c("m", "y")) {
     stop("Invalid '", name, "', must be one of 'm' or 'y'",
          call. = F)
   }
 }
 
 check_length <- function(arg, name) {
-  if(length(arg) > 1) {
+  if (length(arg) > 1) {
     stop(paste0("Invalid '", name, "' value, must be of length 1."), call. = F)
   }
 }
 
 check_prefix <- function(arg, name) {
-  if(!grepl("^10.\\d{4,9}$", arg)) {
+  if (!grepl("^10.\\d{4,9}$", arg)) {
     stop("Invalid '", name, "' must be in format 10.XXXXX")
   }
 }

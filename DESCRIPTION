@@ -18,3 +18,4 @@ BugReports: https://github.com/nicholasmfraser/biorrxiv/issues
 Imports:
     httr (>= 1.3.0),
     jsonlite (>= 1.5.0)
+RoxygenNote: 7.0.1
