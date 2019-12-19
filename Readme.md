@@ -12,8 +12,12 @@ R client for interacting with the [bioRxiv API](https://api.biorxiv.org)
 Install the development version from Github:
 
 ``` r
+# Install package
 install.packages("devtools")
 devtools::install_github("nicholasmfraser/biorrxiv")
+
+# Load package
+library(biorrxiv)
 ```
 
 ## Usage
@@ -92,6 +96,36 @@ pdf downloads):
 # Get usage statistics at a montly level
 biorrxiv_usage(interval = "m")
 ```
+
+## Examples
+
+### Growth of bioRxiv over time
+
+``` r
+library(tidyverse)
+
+# Plot the cumulative number of papers deposited per month
+# Note that month dates are returned in YYYY-MM format - here we convert
+# month dates to YYYY-MM-DD format before plotting
+biorrxiv_summary(interval = "m", format = "df") %>%
+  mutate(month = as.Date(paste0(month, "-01", format = "%Y-%m-%d"))) %>%
+  ggplot() +
+  geom_bar(aes(x = month, y = new_papers_cumulative),
+           fill = "grey75",
+           stat = "identity") +
+  labs(x = "",
+       y= "Cumulative preprints deposited") +
+  scale_x_date(date_breaks = "3 months",
+               date_minor_breaks = "3 months",
+               date_labels = "%b-%y") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5),
+    axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0))
+  )
+```
+
+![](examples/biorxiv_deposited_preprints.png)
 
 ## Contributing
 
