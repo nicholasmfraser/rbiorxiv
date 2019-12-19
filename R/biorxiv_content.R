@@ -22,27 +22,27 @@
 #'
 #' # Get details of preprints deposited between 2018-01-01 and 2018-01-10
 #' # By default, only the first 100 records are returned
-#' biorrxiv_content(from = "2018-01-01", to = "2018-01-10")
+#' biorxiv_content(from = "2018-01-01", to = "2018-01-10")
 #'
 #' # Set a limit to return more than 100 records
-#' biorrxiv_content(from = "2018-01-01", to = "2018-01-10", limit = 200)
+#' biorxiv_content(from = "2018-01-01", to = "2018-01-10", limit = 200)
 #'
 #' # Set limit as "*" to return all records
-#' biorrxiv_content(from = "2018-01-01", to = "2018-01-10", limit = "*")
+#' biorxiv_content(from = "2018-01-01", to = "2018-01-10", limit = "*")
 #'
 #' # Skip the first 100 records
-#' biorrxiv_content(from = "2018-01-01", to = "2018-01-10",
-#'                  limit = 200, skip = 100)
+#' biorxiv_content(from = "2018-01-01", to = "2018-01-10",
+#'                 limit = 200, skip = 100)
 #'
 #' # Specify the format to return data
-#' biorrxiv_content(from = "2018-01-01", to = "2018-01-10", format = "df")
+#' biorxiv_content(from = "2018-01-01", to = "2018-01-10", format = "df")
 #'
 #' # Lookup a preprint by DOI
-#' biorrxiv_content(doi = "10.1101/833400")
+#' biorxiv_content(doi = "10.1101/833400")
 #' }
 
-biorrxiv_content <- function(from = NULL, to = NULL, doi = NULL,
-                             limit = 100, skip = 0, format = "list", ...) {
+biorxiv_content <- function(from = NULL, to = NULL, doi = NULL,
+                            limit = 100, skip = 0, format = "list", ...) {
 
   # Validate arguments
   validate_args(from = from, to = to, doi = doi,

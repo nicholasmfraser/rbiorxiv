@@ -1,4 +1,4 @@
-biorrxiv_publisher <- function(prefix = NULL, from = NULL, to = NULL,
+biorxiv_publisher <- function(prefix = NULL, from = NULL, to = NULL,
                                limit = 100, skip = 0, format = "list", ...) {
   # Validate arguments
   validate_args(prefix = prefix, from = from, to = to,

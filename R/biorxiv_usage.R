@@ -9,16 +9,16 @@
 #' @examples \dontrun{
 #'
 #' # Return a list of monthly usage statistics
-#' biorrxiv_usage(interval = "m")
+#' biorxiv_usage(interval = "m")
 #'
 #' # Return data in a data frame
-#' biorrxiv_usage(interval = "m", format = "df")
+#' biorxiv_usage(interval = "m", format = "df")
 #'
 #' # Return annual usage statistics
-#' biorrxiv_usage(interval = "y")
+#' biorxiv_usage(interval = "y")
 #' }
 
-biorrxiv_usage <- function(interval = "m", format = "list", ...) {
+biorxiv_usage <- function(interval = "m", format = "list", ...) {
   validate_args(interval = interval, format = format)
   url <- paste0("https://api.biorxiv.org/usage/", interval)
   content <- fetch_content(url = url)

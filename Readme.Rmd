@@ -37,23 +37,23 @@ Retrieve details of either a set of preprints deposited between two dates, or lo
 
 # Get details of preprints deposited between 2018-01-01 and 2018-01-10
 # By default, only the first 100 records are returned
-biorrxiv_content(from = "2018-01-01", to = "2018-01-10")
+biorxiv_content(from = "2018-01-01", to = "2018-01-10")
 
 # Set a limit to return more than 100 records
-biorrxiv_content(from = "2018-01-01", to = "2018-01-10", limit = 200)
+biorxiv_content(from = "2018-01-01", to = "2018-01-10", limit = 200)
 
 # Or set limit as "*" to return all records
-biorrxiv_content(from = "2018-01-01", to = "2018-01-10", limit = "*")
+biorxiv_content(from = "2018-01-01", to = "2018-01-10", limit = "*")
 
 # Skip the first 100 records
-biorrxiv_content(from = "2018-01-01", to = "2018-01-10", limit = 200, skip = 100)
+biorxiv_content(from = "2018-01-01", to = "2018-01-10", limit = 200, skip = 100)
 
 # By default, data is returned in a list. Use the "format" argument to specify
 # that data should be returned in "json" format or as a data frame ("df").
-biorrxiv_content(from = "2018-01-01", to = "2018-01-10", format = "df")
+biorxiv_content(from = "2018-01-01", to = "2018-01-10", format = "df")
 
 # Lookup a preprint by DOI
-biorrxiv_content(doi = "10.1101/833400")
+biorxiv_content(doi = "10.1101/833400")
 
 ```
 
@@ -64,7 +64,7 @@ Retrieve details of published articles associated with bioRxiv preprints that we
 ```{r eval=FALSE}
 
 # Get details of all articles published between 2018-01-01 and 2018-01-10
-biorrxiv_published(from = "2018-01-01", to = "2018-01-10", limit = "*", format = "df")
+biorxiv_published(from = "2018-01-01", to = "2018-01-10", limit = "*", format = "df")
 
 ```
 
@@ -75,7 +75,7 @@ Retrieve details of articles published by a specific publisher (specified by the
 ```{r eval=FALSE}
 
 # Get details of all articles published by eLife (prefix = 10.7554) between 2018-01-01 and 2018-01-10
-biorrxiv_publisher(prefix = "10.7554", from = "2018-01-01", to = "2018-01-10", 
+biorxiv_publisher(prefix = "10.7554", from = "2018-01-01", to = "2018-01-10", 
                    limit = "*", format = "df")
 
 ```
@@ -87,10 +87,10 @@ Retrieve summary statistics for bioRxiv content (e.g. number of preprints deposi
 ```{r eval=FALSE}
 
 # Get summary statistics at a montly level
-biorrxiv_summary(interval = "m")
+biorxiv_summary(interval = "m")
 
 # Get summary statistics at a yearly level
-biorrxiv_summary(interval = "y")
+biorxiv_summary(interval = "y")
 
 ```
  
@@ -101,7 +101,7 @@ Retrieve summary statistics for usage of bioRxiv content (e.g. number of pdf dow
 ```{r eval=FALSE}
 
 # Get usage statistics at a montly level
-biorrxiv_usage(interval = "m")
+biorxiv_usage(interval = "m")
 
 ```
 
@@ -116,7 +116,7 @@ library(tidyverse)
 # Plot the cumulative number of new preprints deposited per month
 # Note that month dates are returned in YYYY-MM format - here we convert
 # month dates to YYYY-MM-DD format to make plotting easier
-biorrxiv_summary(interval = "m", format = "df") %>%
+biorxiv_summary(interval = "m", format = "df") %>%
   mutate(month = as.Date(paste0(month, "-01", format = "%Y-%m-%d"))) %>%
   ggplot() +
   geom_bar(aes(x = month, y = new_papers_cumulative),
@@ -148,7 +148,7 @@ library(tidyverse)
 
 # Plot the cumulative number of PDF downloads per month
 # Here month dates are returned already in YYYY-MM-DD format
-biorrxiv_usage(interval = "m", format = "df") %>%
+biorxiv_usage(interval = "m", format = "df") %>%
   mutate(month = as.Date(month)) %>%
   ggplot() +
   geom_bar(aes(x = month, y = pdf_cumulative),
