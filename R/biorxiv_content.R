@@ -40,11 +40,8 @@
 #' # Lookup a preprint by DOI
 #' biorxiv_content(doi = "10.1101/833400")
 #' }
-
 biorxiv_content <- function(from = NULL, to = NULL, doi = NULL,
-                            limit = 100, skip = 0, format = "list", ...) {
-
-  # Validate arguments
+                            limit = 100, skip = 0, format = "list") {
   validate_args(from = from, to = to, doi = doi,
                 limit = limit, skip = skip, format = format)
 

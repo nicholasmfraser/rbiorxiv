@@ -4,7 +4,7 @@
 \alias{biorxiv_summary}
 \title{Retrieve summary statistics for deposits of bioRxiv content}
 \usage{
-biorxiv_summary(interval = "m", format = "list", ...)
+biorxiv_summary(interval = "m", format = "list")
 }
 \arguments{
 \item{interval}{(character) Return either monthly \code{m} or yearly \code{y} data.

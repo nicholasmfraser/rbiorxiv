@@ -124,7 +124,7 @@ biorxiv_summary(interval = "m", format = "df") %>%
   )
 ```
 
-![](examples/biorxiv_deposited_preprints.png)
+![](man/figures/biorxiv_deposited_preprints.png)
 
 ### Number of bioRxiv PDF downloads over time
 
@@ -155,7 +155,7 @@ biorxiv_usage(interval = "m", format = "df") %>%
   )
 ```
 
-![](examples/biorxiv_pdf_downloads.png)
+![](man/figures/biorxiv_pdf_downloads.png)
 
 Contributing
 ------------

@@ -17,8 +17,7 @@
 #' # Return annual usage statistics
 #' biorxiv_usage(interval = "y")
 #' }
-
-biorxiv_usage <- function(interval = "m", format = "list", ...) {
+biorxiv_usage <- function(interval = "m", format = "list") {
   validate_args(interval = interval, format = format)
   url <- paste0("https://api.biorxiv.org/usage/", interval)
   content <- fetch_content(url = url)

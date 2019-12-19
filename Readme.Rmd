@@ -4,6 +4,12 @@ output: rmarkdown::github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  fig.path = "man/figures/"
+)
+```
+
 # biorrxiv
 
 R client for interacting with the [bioRxiv API](https://api.biorxiv.org)
@@ -138,7 +144,7 @@ biorxiv_summary(interval = "m", format = "df") %>%
 
 ```
 
-![](examples/biorxiv_deposited_preprints.png)
+![](man/figures/biorxiv_deposited_preprints.png)
 
 ### Number of bioRxiv PDF downloads over time
 
@@ -171,7 +177,7 @@ biorxiv_usage(interval = "m", format = "df") %>%
 
 ```
 
-![](examples/biorxiv_pdf_downloads.png)
+![](man/figures/biorxiv_pdf_downloads.png)
 
 ## Contributing
 

@@ -10,8 +10,7 @@ biorxiv_content(
   doi = NULL,
   limit = 100,
   skip = 0,
-  format = "list",
-  ...
+  format = "list"
 )
 }
 \arguments{

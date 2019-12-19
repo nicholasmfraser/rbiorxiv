@@ -41,8 +41,8 @@ validate <- function(arg, name, rules) {
   }
 }
 
+# Validate date format
 check_date <- function(arg, name) {
-  # Validate date format
   try <- tryCatch(!is.na(as.Date(arg, format = "%Y-%m-%d")),
                   error = function(e) {
                     stop(paste0("Invalid '", name,
@@ -55,21 +55,24 @@ check_date <- function(arg, name) {
   }
 }
 
+# Validate doi
 check_doi <- function(arg, name) {
   # See https://www.crossref.org/blog/dois-and-matching-regular-expressions/
   # Seems to work fine with bioRxiv DOIs
-  if (!grepl("^10.1101\\/[-._;()\\/:A-Z0-9]+$", doi)) {
+  if (!grepl("^10.1101\\/[-._;()\\/:A-Z0-9]+$", arg)) {
     stop("Invalid '", name, "', must be in format '10.1101/XXXXXX'",
          call. = F)
   }
 }
 
+# Validate argument is not empty
 check_empty <- function(arg, name) {
   if (arg == "") {
     stop(paste0("Invalid '", name, "', value cannot be empty."), call. = F)
   }
 }
 
+# Validate data format
 check_format <- function(arg, name) {
   if (!arg %in% c("list", "json", "df")) {
     stop("Invalid '", name, "', must be one of 'list', 'json' or 'df'",
@@ -77,6 +80,7 @@ check_format <- function(arg, name) {
   }
 }
 
+# Validate integer
 check_integer <- function(arg, name) {
   # ignore validation when limit = "*"
   if (name != "limit" & arg != "*") {
@@ -92,6 +96,7 @@ check_integer <- function(arg, name) {
   }
 }
 
+# Validate interval ("m" or "y")
 check_interval <- function(arg, name) {
   if (!arg %in% c("m", "y")) {
     stop("Invalid '", name, "', must be one of 'm' or 'y'",
@@ -99,12 +104,14 @@ check_interval <- function(arg, name) {
   }
 }
 
+# Validate length (arguments should have length of 1)
 check_length <- function(arg, name) {
-  if (length(arg) > 1) {
+  if (length(arg) != 1) {
     stop(paste0("Invalid '", name, "' value, must be of length 1."), call. = F)
   }
 }
 
+# Validate doi prefix
 check_prefix <- function(arg, name) {
   if (!grepl("^10.\\d{4,9}$", arg)) {
     stop("Invalid '", name, "' must be in format 10.XXXXX")
