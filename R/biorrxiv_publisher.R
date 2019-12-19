@@ -3,7 +3,7 @@ biorrxiv_publisher <- function(prefix = NULL, from = NULL, to = NULL,
   # Validate arguments
   validate_args(prefix = prefix, from = from, to = to,
                 limit = limit, skip = skip, format = format)
-  url <- paste0("https://api.biorxiv.org/publisher/", prefix, "/",
+  url <- paste0(base_url(), "/publisher/", prefix, "/",
                 from, "/", to, "/", skip)
   content <- fetch_content(url = url)
   count_results <- content$messages[[1]]$count
@@ -21,7 +21,7 @@ biorrxiv_publisher <- function(prefix = NULL, from = NULL, to = NULL,
     iterations <- ceiling(limit/max_results_per_page) - 1
     for(i in 1:iterations) {
       cursor <- skip + (i * max_results_per_page)
-      url <- paste0("https://api.biorxiv.org/publisher/", prefix, "/",
+      url <- paste0(base_url(), "/publisher/", prefix, "/",
                     from, "/", to, "/", cursor)
       content <- fetch_content(url = url)
       data <- c(data, content$collection)

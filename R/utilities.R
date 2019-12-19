@@ -1,3 +1,8 @@
+# bioRxiv API base url
+base_url <- function() {
+  return("https://api.biorxiv.org/")
+}
+
 # Make query to API and return full response content
 fetch_content <- function(url) {
   request <- httr::GET(url = url)
@@ -26,7 +31,6 @@ handle_response <- function(request) {
   }
 }
 
-
 # Return the data in the requested format
 return_data <- function(data, format) {
   if(format == "list") {
@@ -53,38 +57,63 @@ data_to_df <- function(data) {
   return(df)
 }
 
+# Manually set the types for each column in data frame
 set_column_types <- function(df) {
+
   # character columns
   cols_c <- c(
     "abstract",
     "author_corresponding",
     "author_corresponding_institution",
     "authors",
+    "biorxiv_doi",
     "category",
     "doi",
+    "preprint_category",
+    "preprint_title",
     "published",
+    "published_doi",
     "title")
 
   # numeric columns
   cols_n <- c(
+    "abstract_cumulative",
+    "abstract_views",
+    "full_text_cumulative",
+    "full_text_views",
+    "new_papers",
+    "new_papers_cumulative",
+    "pdf_cumulative",
+    "pdf_downloads",
+    "published_citation_count",
+    "revised_papers",
+    "revised_papers_cumulative",
     "version"
   )
 
   #date columns
   cols_d <- c(
-    "date"
+    "date",
+    "month",
+    "preprint_date",
+    "published_date"
   )
+
+  to_character <- function(column) {
+    return(as.character(column))
+  }
 
   to_numeric <- function(column) {
     return(as.numeric(as.character(column)))
   }
+
   to_date <- function(column) {
     # For now keep dates as character vector - can adjust this later
     return(as.character(column))
   }
 
   df[,colnames(df) %in% cols_c] <- sapply(df[,colnames(df) %in% cols_c],
-                                          as.character)
+                                          to_character)
   df[,colnames(df) %in% cols_n] <- sapply(df[,colnames(df) %in% cols_n],
                                           to_numeric)
   df[,colnames(df) %in% cols_d] <- sapply(df[,colnames(df) %in% cols_d],

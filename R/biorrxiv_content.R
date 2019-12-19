@@ -1,4 +1,4 @@
-# TO DO: add support for xml
+# TO DO: add support for xml?
 
 biorrxiv_content <- function(from = NULL, to = NULL, doi = NULL,
                              limit = 100, skip = 0, format = "list", ...) {
@@ -38,14 +38,13 @@ biorrxiv_content <- function(from = NULL, to = NULL, doi = NULL,
 }
 
 query_doi <- function(doi) {
-  url <- paste0("https://api.biorxiv.org/detail/", doi, "/na/json")
+  url <- paste0(base_url(), "/detail/", doi)
   content <- fetch_content(url = url)
   return(content)
 }
 
 query_interval <- function(from, to, cursor) {
-  url <- paste0("https://api.biorxiv.org/detail/", from, "/", to,
-                "/", cursor, "/json")
+  url <- paste0(base_url(), "/detail/", from, "/", to, "/", cursor)
   content <- fetch_content(url = url)
   return(content)
 }

@@ -1,77 +1,101 @@
 # Here we validate arguments for our query functions
-validate_args <- function(from = NULL, to = NULL, interval = NULL, doi = NULL,
-                          format = NULL, skip = NULL, limit = NULL, prefix = NULL,
-                          ...) {
+validate_args <- function(from = NULL, to = NULL, interval = NULL,
+                          doi = NULL, format = NULL, skip = NULL,
+                          limit = NULL, prefix = NULL) {
 
-  # Validate individual arguments
-  if(!is.null(from)) validate_from(from)
-  if(!is.null(to)) validate_to(to)
-  if(!is.null(interval)) validate_interval(interval)
-  if(!is.null(doi)) validate_doi(doi)
-  if(!is.null(format)) validate_format(format)
-  if(!is.null(skip)) validate_skip(skip)
-  if(!is.null(limit)) validate_limit(limit)
-  if(!is.null(prefix)) validate_prefix(prefix)
+  # Create a list of supplied arguments
+  args <- list(
+    "from" = from,
+    "to" = to,
+    "interval" = interval,
+    "doi" = doi,
+    "format" = format,
+    "skip" = skip,
+    "limit" = limit,
+    "prefix" = prefix
+  )
 
+  # A list of rules to check for each argument
+  rules <- list(
+    "from" = c("empty", "length", "date"),
+    "to" = c("empty", "length", "date"),
+    "interval" = c("empty", "length", "interval"),
+    "doi" = c("empty", "length", "doi"),
+    "format" = c("empty", "length", "format"),
+    "skip" = c("empty", "length", "integer"),
+    "limit" = c("empty", "length", "integer"),
+    "prefix" = c("empty", "length", "prefix")
+  )
 
-  # combined validation rules
-  # from date should be before to date
-  # skip not more than limit?
+  sapply(names(args),
+         function(name) validate(args[[name]], name, rules[[name]]))
+
 }
 
-validate_from <- function(from) {
-  check_length(from, "from")
-  check_date(from, "from")
+# Validate arguments
+validate <- function(arg, name, rules) {
+  if(!is.null(arg)) {
+    sapply(rules,
+           function(rule, arg, name) do.call(paste0("check_", rule),
+                                             list(arg, name)), arg, name)
+  }
 }
 
-validate_to <- function(to) {
-  check_length(to, "to")
-  check_date(to, "to")
-}
-
-validate_interval <- function(interval) {
-  check_length(interval, "interval")
-  if(!interval %in% c("m", "y")) {
-    stop("'interval' argument must be one of 'm' or 'y'",
+check_date <- function(arg, name) {
+  # Validate date format
+  try <- tryCatch(!is.na(as.Date(arg, format = "%Y-%m-%d")),
+                  error = function(e) {
+                    stop(paste0("Invalid '", name,
+                                "' date. Must be in YYYY-MM-DD format"),
+                         call. = F)
+                  })
+  if(!try) {
+    stop(paste0("Invalid '", name, "', must be format YYYY-MM-DD"),
          call. = F)
   }
 }
 
-validate_doi <- function(doi) {
-  check_length(doi, "doi")
+check_doi <- function(arg, name) {
   # See https://www.crossref.org/blog/dois-and-matching-regular-expressions/
   # Seems to work fine with bioRxiv DOIs
   if(!grepl("^10.1101\\/[-._;()\\/:A-Z0-9]+$", doi)) {
-    stop("Invalid DOI. Check DOI is a valid bioRxiv DOI in format '10.1101/XXXXXX'",
+    stop("Invalid '", name, "', must be in format '10.1101/XXXXXX'",
          call. = F)
   }
 }
 
-# Validate format. Must always be one of "list", "json" or "df"
-validate_format <- function(format) {
-  check_length(format, "format")
-  if(!format %in% c("list", "json", "df")) {
-    stop('"format" argument must be one of "list", "json" or "df"',
+check_empty <- function(arg, name) {
+  if(arg == "") {
+    stop(paste0("Invalid '", name, "', value cannot be empty."), call. = F)
+  }
+}
+
+check_format <- function(arg, name) {
+  if(!arg %in% c("list", "json", "df")) {
+    stop("Invalid '", name, "', must be one of 'list', 'json' or 'df'",
          call. = F)
   }
 }
 
-validate_skip <- function(skip) {
-  check_length(skip, "skip")
-  check_number(skip, "skip")
-}
-
-validate_limit <- function(limit) {
-  check_length(limit, "limit")
-  if(limit != "*") {
-    check_number(limit, "limit")
+check_integer <- function(arg, name) {
+  # ignore validation when limit = "*"
+  if(name != "limit" & arg != "*") {
+    try <- tryCatch(!is.na(as.integer(arg)),
+                    error = function(e) {
+                      stop(paste0("Invalid '", name, "', must be an integer value"),
+                           call. = F)
+                    })
+    if(!try) {
+      stop(paste0("Invalid '", name, "', must be an integer value"),
+           call. = F)
+    }
   }
 }
 
-validate_prefix <- function(prefix) {
-  check_length(prefix, "prefix")
-  if(!grepl("^10.\\d{4,9}$", prefix)) {
-    stop("Invalid DOI prefix. Check DOI prefix is valid in format 10.XXXXX")
+check_interval <- function(arg, name) {
+  if(!arg %in% c("m", "y")) {
+    stop("Invalid '", name, "', must be one of 'm' or 'y'",
+         call. = F)
   }
 }
 
@@ -81,21 +105,8 @@ check_length <- function(arg, name) {
   }
 }
 
-check_date <- function(arg, name) {
-  # Validate date format
-  try <- tryCatch(!is.na(as.Date(arg, format = "%Y-%m-%d")),
-                  error = function(e) {
-                    stop(paste0("Invalid '", name, "' date. Must be in YYYY-MM-DD format"),
-                         call. = F)
-                  })
-  if(!try) {
-    stop(paste0("Invalid '", name, "' date. Must be in YYYY-MM-DD format"),
-         call. = F)
-  }
-}
-
-check_number <- function(arg, name) {
-  if(!is.numeric(arg)) {
-    stop("Invalid '", name, "' value. Must be numeric.")
+check_prefix <- function(arg, name) {
+  if(!grepl("^10.\\d{4,9}$", arg)) {
+    stop("Invalid '", name, "' must be in format 10.XXXXX")
   }
 }
