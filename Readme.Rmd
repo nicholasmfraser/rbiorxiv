@@ -8,7 +8,10 @@ output: rmarkdown::github_document
 
 R client for interacting with the [bioRxiv API](https://api.biorxiv.org)
 
-** This is a (very incomplete) work in progress **
+**NOTES**
+
+* This is currently an (incomplete) work in progress
+* The bioRxiv API is in beta and subject to change
 
 ## Installation
 
@@ -27,7 +30,7 @@ library(biorrxiv)
 
 ## Usage
 
-The main functions in `biorrxiv` loosely conform to the API endpoints outlined in the API documentation ([see here](https://api.biorxiv.org/)).
+The main functions in `biorrxiv` generally conform to the API endpoints outlined in the API documentation ([see here](https://api.biorxiv.org/)).
 
 ### Content detail
 
