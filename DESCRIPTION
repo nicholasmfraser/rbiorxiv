@@ -2,9 +2,8 @@ Package: biorrxiv
 Type: Package
 Title: R client for the bioRxiv API
 Version: 0.1.0
-Authors@R: person("Nicholas", "Fraser", email = "nicholasmfraser@gmail.com",
-    role = c("aut", "cre"))
-Maintainer: The package maintainer <yourself@somewhere.net>
+Authors@R: c(person("Nicholas", "Fraser", email = "nicholasmfraser@gmail.com",
+                    role = c("aut", "cre")))
 Description: biorrxiv is an R client for interacting with the bioRxiv API
     (https://api.biorxiv.org/). Functions include retrieving metadata of
     preprints, details of published papers associated with preprints, and
@@ -18,5 +17,5 @@ BugReports: https://github.com/nicholasmfraser/biorrxiv/issues
 Imports:
     httr (>= 1.3.0),
     jsonlite (>= 1.5.0)
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)

@@ -9,16 +9,15 @@
 #' @examples \dontrun{
 #'
 #' # Return a list of monthly deposit statistics
-#' biorrxiv_summary(interval = "m")
+#' biorxiv_summary(interval = "m")
 #'
 #' # Return data in a data frame
-#' biorrxiv_summary(interval = "m", format = "df")
+#' biorxiv_summary(interval = "m", format = "df")
 #'
 #' # Return annual deposit statistics
-#' biorrxiv_summary(interval = "y")
+#' biorxiv_summary(interval = "y")
 #' }
-
-biorrxiv_summary <- function(interval = "m", format = "list", ...) {
+biorxiv_summary <- function(interval = "m", format = "list") {
   validate_args(interval = interval, format = format)
   url <- paste0(base_url(), "/sum/", interval)
   content <- fetch_content(url = url)
