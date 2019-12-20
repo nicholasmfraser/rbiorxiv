@@ -19,3 +19,5 @@ Imports:
     jsonlite (>= 1.5.0)
 RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)
+Suggests: 
+    testthat (>= 2.1.0)
