@@ -53,7 +53,7 @@ biorxiv_publisher <- function(prefix = NULL, from = NULL, to = NULL,
   max_results_per_page <- 100
   if (limit <= count_results) {
     data <- content$collection[1:limit]
-  } else if (count_results == total_results) {
+  } else if (count_results < max_results_per_page) {
     data <- content$collection
   } else {
     data <- content$collection

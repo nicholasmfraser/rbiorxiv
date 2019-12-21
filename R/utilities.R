@@ -1,6 +1,6 @@
 # bioRxiv API base url
 base_url <- function() {
-  return("https://api.biorxiv.org/")
+  return("https://api.biorxiv.org")
 }
 
 # Make query to API and return full response content

@@ -55,13 +55,14 @@ biorxiv_content <- function(from = NULL, to = NULL, doi = NULL,
     if (limit == "*") {
       limit <- total_results - skip
     }
+    max_results_per_page <- 100
     if (limit <= count_results) {
       data <- content$collection[1:limit]
-    } else if (count_results == total_results) {
-      data <- content$collection
+    } else if (count_results < max_results_per_page) {
+      limit <- count_results
+      data <- content$collection[1:limit]
     } else {
       data <- content$collection
-      max_results_per_page <- 100
       iterations <- ceiling(limit / max_results_per_page) - 1
       for (i in 1:iterations) {
         cursor <- skip + (i * max_results_per_page)

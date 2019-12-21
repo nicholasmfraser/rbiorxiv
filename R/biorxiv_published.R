@@ -42,13 +42,13 @@ biorxiv_published <- function(from = NULL, to = NULL, limit = 100,
   if (limit == "*") {
     limit <- total_results - skip
   }
+  max_results_per_page <- 100
   if (limit <= count_results) {
     data <- content$collection[1:limit]
-  } else if (count_results == total_results) {
+  } else if (count_results < max_results_per_page) {
     data <- content$collection
   } else {
     data <- content$collection
-    max_results_per_page <- 100
     iterations <- ceiling(limit / max_results_per_page) - 1
     for (i in 1:iterations) {
       cursor <- skip + (i * max_results_per_page)
