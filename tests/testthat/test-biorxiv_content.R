@@ -10,7 +10,7 @@ test_that("biorxiv_content returns", {
   # Correct class
   expect_is(doi_list, "list")
   expect_is(doi_json, "json")
-  expect_is(doi_df, "df")
+  expect_is(doi_df, "data.frame")
 
 
 })
