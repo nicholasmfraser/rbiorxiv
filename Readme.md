@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-biorrxiv
-========
+
+# biorrxiv
 
 R client for interacting with the [bioRxiv API](https://api.biorxiv.org)
 
@@ -10,8 +10,7 @@ R client for interacting with the [bioRxiv API](https://api.biorxiv.org)
   - This is currently an (incomplete) work in progress
   - The bioRxiv API is in beta and subject to change
 
-Installation
-------------
+## Installation
 
 Install the development version from Github:
 
@@ -24,14 +23,16 @@ devtools::install_github("nicholasmfraser/biorrxiv")
 library(biorrxiv)
 ```
 
-Usage
------
+## Usage
 
-The main functions in `biorrxiv` loosely conform to the API endpoints outlined in the API documentation ([see here](https://api.biorxiv.org/)).
+The main functions in `biorrxiv` generally conform to the API endpoints
+outlined in the API documentation ([see
+here](https://api.biorxiv.org/)).
 
 ### Content detail
 
-Retrieve details of either a set of preprints deposited between two dates, or lookup a single preprint by DOI:
+Retrieve details of either a set of preprints deposited between two
+dates, or lookup a single preprint by DOI:
 
 ``` r
 # Get details of preprints deposited between 2018-01-01 and 2018-01-10
@@ -57,7 +58,8 @@ biorxiv_content(doi = "10.1101/833400")
 
 ### Published article detail
 
-Retrieve details of published articles associated with bioRxiv preprints that were published between two dates:
+Retrieve details of published articles associated with bioRxiv preprints
+that were published between two dates:
 
 ``` r
 # Get details of all articles published between 2018-01-01 and 2018-01-10
@@ -66,7 +68,8 @@ biorxiv_published(from = "2018-01-01", to = "2018-01-10", limit = "*", format = 
 
 ### Publisher article detail
 
-Retrieve details of articles published by a specific publisher (specified by their doi prefix) between two dates:
+Retrieve details of articles published by a specific publisher
+(specified by their doi prefix) between two dates:
 
 ``` r
 # Get details of all articles published by eLife (prefix = 10.7554) between 2018-01-01 and 2018-01-10
@@ -76,7 +79,8 @@ biorxiv_publisher(prefix = "10.7554", from = "2018-01-01", to = "2018-01-10",
 
 ### Content summary statistics
 
-Retrieve summary statistics for bioRxiv content (e.g. number of preprints deposited):
+Retrieve summary statistics for bioRxiv content (e.g. number of
+preprints deposited):
 
 ``` r
 # Get summary statistics at a montly level
@@ -88,15 +92,15 @@ biorxiv_summary(interval = "y")
 
 ### Usage summary statistics
 
-Retrieve summary statistics for usage of bioRxiv content (e.g. number of pdf downloads):
+Retrieve summary statistics for usage of bioRxiv content (e.g. number of
+pdf downloads):
 
 ``` r
 # Get usage statistics at a montly level
 biorxiv_usage(interval = "m")
 ```
 
-Examples
---------
+## Examples
 
 ### Growth of bioRxiv over time
 
@@ -129,7 +133,7 @@ biorxiv_summary(interval = "m", format = "df") %>%
 
 ![](man/figures/biorxiv_deposited_preprints.png)
 
-### Number of bioRxiv PDF downloads over time
+### PDF downloads over time
 
 ``` r
 library(tidyverse)
@@ -160,7 +164,34 @@ biorxiv_usage(interval = "m", format = "df") %>%
 
 ![](man/figures/biorxiv_pdf_downloads.png)
 
-Contributing
-------------
+### Time to publication
 
-Contributors are extremely welcome! Please contribute here directly, or contact me at <nicholasmfraser@gmail.com> for more information.
+``` r
+library(tidyverse)
+
+# Calculate the number of days between preprint deposition and 
+# journal publication. Plot results as a histogram
+biorxiv_published(from = "2013-11-01", to = "2018-12-31", 
+                  limit = "*", format = "df") %>%
+  mutate(days = as.Date(published_date) - as.Date(preprint_date)) %>%
+  ggplot() +
+  geom_histogram(aes(as.numeric(days)),
+                 binwidth = 1,
+                 fill = "#cccccc") +
+  labs(x = "Days between preprint deposition and journal publication",
+       y= "Number of articles",
+       title ="Time to publication") +
+  coord_cartesian(xlim = c(-100, 1000)) +
+  theme_minimal() +
+  theme(
+    axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)),
+    plot.title = element_text(face = "bold")
+  )
+```
+
+![](man/figures/biorxiv_time_to_publication.png)
+
+## Contributing
+
+Contributors are extremely welcome\! Please contribute here directly, or
+contact me at <nicholasmfraser@gmail.com> for more information.

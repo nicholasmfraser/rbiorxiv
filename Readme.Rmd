@@ -138,6 +138,7 @@ biorxiv_summary(interval = "m", format = "df") %>%
                date_minor_breaks = "3 months",
                date_labels = "%b-%y",
                expand = c(0,0)) +
+  scale_y_continuous(labels = scales::comma) +
   theme_minimal() +
   theme(
     axis.text.x = element_text(angle = 90, vjust = 0.5),
@@ -149,7 +150,7 @@ biorxiv_summary(interval = "m", format = "df") %>%
 
 ![](man/figures/biorxiv_deposited_preprints.png)
 
-### Number of bioRxiv PDF downloads over time
+### PDF downloads over time
 
 ```{r eval=FALSE}
 
@@ -181,6 +182,35 @@ biorxiv_usage(interval = "m", format = "df") %>%
 ```
 
 ![](man/figures/biorxiv_pdf_downloads.png)
+
+### Time to publication
+
+```{r eval=FALSE}
+
+library(tidyverse)
+
+# Calculate the number of days between preprint deposition and 
+# journal publication. Plot results as a histogram
+biorxiv_published(from = "2013-11-01", to = "2018-12-31", 
+                  limit = "*", format = "df") %>%
+  mutate(days = as.Date(published_date) - as.Date(preprint_date)) %>%
+  ggplot() +
+  geom_histogram(aes(as.numeric(days)),
+                 binwidth = 1,
+                 fill = "#cccccc") +
+  labs(x = "Days between preprint deposition and journal publication",
+       y= "Number of articles",
+       title ="Time to publication") +
+  coord_cartesian(xlim = c(-100, 1000)) +
+  theme_minimal() +
+  theme(
+    axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)),
+    plot.title = element_text(face = "bold")
+  )
+
+```
+
+![](man/figures/biorxiv_time_to_publication.png)
 
 ## Contributing
 
