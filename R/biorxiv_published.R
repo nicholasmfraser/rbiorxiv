@@ -33,8 +33,15 @@
 #' }
 biorxiv_published <- function(from = NULL, to = NULL, limit = 100,
                               skip = 0, format = "list") {
+
+  # Validate individual arguments
   validate_args(from = from, to = to, limit = limit,
                 skip = skip, format = format)
+
+  # Extra validation checks
+  check_from_to(from = from, to = to)
+
+  # Do queries
   url <- paste0(base_url(), "/pub/", from, "/", to, "/", skip)
   content <- fetch_content(url = url)
   count_results <- content$messages[[1]]$count
@@ -42,13 +49,13 @@ biorxiv_published <- function(from = NULL, to = NULL, limit = 100,
   if (limit == "*") {
     limit <- total_results - skip
   }
+  max_results_per_page <- 100
   if (limit <= count_results) {
     data <- content$collection[1:limit]
-  } else if (count_results == total_results) {
+  } else if (count_results < max_results_per_page) {
     data <- content$collection
   } else {
     data <- content$collection
-    max_results_per_page <- 100
     iterations <- ceiling(limit / max_results_per_page) - 1
     for (i in 1:iterations) {
       cursor <- skip + (i * max_results_per_page)

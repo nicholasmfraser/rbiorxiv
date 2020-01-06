@@ -15,7 +15,7 @@ validate_args <- function(from = NULL, to = NULL, interval = NULL,
     "prefix" = prefix
   )
 
-  # A list of rules to check for each argument
+  # A list of rules to check for each individual argument
   rules <- list(
     "from" = c("empty", "length", "date"),
     "to" = c("empty", "length", "date"),
@@ -29,7 +29,6 @@ validate_args <- function(from = NULL, to = NULL, interval = NULL,
 
   sapply(names(args),
          function(name) validate(args[[name]], name, rules[[name]]))
-
 }
 
 # Validate arguments
@@ -115,5 +114,30 @@ check_length <- function(arg, name) {
 check_prefix <- function(arg, name) {
   if (!grepl("^10.\\d{4,9}$", arg)) {
     stop("Invalid '", name, "' must be in format 10.XXXXX")
+  }
+}
+
+# Additional validation checks
+
+check_doi_from_to <- function(doi, from, to) {
+  if(is.null(doi) & is.null(from) & is.null(to)) {
+    stop("Missing query parameters: provide either a 'doi', or 'from' and 'to'
+         parameters to request content",
+         call. = F)
+  }
+  if (!is.null(doi) & (!is.null(to) | !is.null(from))) {
+    stop("'doi' parameter cannot be used with 'from' or 'to' parameters",
+         call. = F)
+  }
+  if((is.null(from) & !is.null(to)) | (is.null(to) & !is.null(from))) {
+    stop("Both 'from' and 'to' parameters must be provided",
+         call. = F)
+  }
+}
+
+check_from_to <- function(from, to) {
+  if(is.null(from) | is.null(to)) {
+    stop("Both 'from' and 'to' parameters must be provided ",
+         call. = F)
   }
 }
