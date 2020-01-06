@@ -16,7 +16,7 @@ R client for interacting with the [bioRxiv API](https://api.biorxiv.org)
 
 **NOTES**
 
-* This is currently an (incomplete) work in progress
+* This is a work in progress
 * The bioRxiv API is in beta and subject to change
 
 ## Installation

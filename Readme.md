@@ -7,7 +7,7 @@ R client for interacting with the [bioRxiv API](https://api.biorxiv.org)
 
 **NOTES**
 
-  - This is currently an (incomplete) work in progress
+  - This is a work in progress
   - The bioRxiv API is in beta and subject to change
 
 ## Installation
@@ -123,6 +123,7 @@ biorxiv_summary(interval = "m", format = "df") %>%
                date_minor_breaks = "3 months",
                date_labels = "%b-%y",
                expand = c(0,0)) +
+  scale_y_continuous(labels = scales::comma) +
   theme_minimal() +
   theme(
     axis.text.x = element_text(angle = 90, vjust = 0.5),
