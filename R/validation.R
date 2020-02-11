@@ -19,7 +19,8 @@ check_date <- function(arg) {
   call <- deparse(substitute(arg))
   try <- tryCatch(!is.na(as.Date(arg, format = "%Y-%m-%d")),
                   error = function(e) {
-                    stop(call, " date must be in yyyy-mm-dd format", call. = F)
+                    stop("'", call, "' parameter must be in yyyy-mm-dd format",
+                         call. = F)
                   })
   if (!try) {
     stop("'", call, "' parameter must be in yyyy-mm-dd format", call. = F)
