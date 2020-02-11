@@ -49,10 +49,6 @@ biorxiv_content <- function(from = NULL, to = NULL, doi = NULL,
 
   # Do queries
   if (!is.null(doi)) {
-    if(!is.null(from) | !is.null(to)) {
-      warning("Ignoring 'from' and 'to': cannot be provided with 'doi'",
-              call. = F, immediate. = T)
-    }
     content <- query_doi(doi = doi)
     data <- content$collection
   } else {
@@ -76,17 +72,22 @@ biorxiv_content <- function(from = NULL, to = NULL, doi = NULL,
         content <- query_interval(from = from, to = to, skip = cursor)
         data <- c(data, content$collection)
       }
+      if(limit < length(data)) {
+        data <- data[1:limit]
+      }
     }
   }
   return_data(data = data, format = format)
 }
 
+# Send a query to the content endpoint with a DOI
 query_doi <- function(doi) {
   url <- paste0(base_url(), "/detail/", doi)
   content <- fetch_content(url = url)
   return(content)
 }
 
+# Send a query to the content endpoint with 'from' and 'to' dates
 query_interval <- function(from, to, skip) {
   url <- paste0(base_url(), "/detail/", from, "/", to, "/", skip)
   content <- fetch_content(url = url)

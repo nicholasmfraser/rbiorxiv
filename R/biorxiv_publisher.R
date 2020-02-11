@@ -69,6 +69,9 @@ biorxiv_publisher <- function(prefix = NULL, from = NULL, to = NULL,
       content <- fetch_content(url = url)
       data <- c(data, content$collection)
     }
+    if(limit < length(data)) {
+      data <- data[1:limit]
+    }
   }
   return_data(data = data, format = format)
 }
