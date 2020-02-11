@@ -17,8 +17,6 @@ handle_response <- function(request) {
     status <- unlist(httr::content(request, as = "parsed")$messages)["status"]
     if (status != "ok") {
       stop(status, call. = F)
-    } else {
-      return()
     }
   } else if (request$status_code == 404) {
     stop("404: Page not found", call. = F)
@@ -73,7 +71,8 @@ set_column_types <- function(df) {
     "preprint_title",
     "published",
     "published_doi",
-    "title")
+    "title",
+    "type")
 
   # numeric columns
   cols_n <- c(

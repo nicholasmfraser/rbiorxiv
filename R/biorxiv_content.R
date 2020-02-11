@@ -43,15 +43,16 @@
 biorxiv_content <- function(from = NULL, to = NULL, doi = NULL,
                             limit = 100, skip = 0, format = "list") {
 
-  # Validate individual arguments
-  validate_args(doi = doi, from = from, to = to, limit = limit,
-                skip = skip, format = format)
-
-  # Extra validation checks
-  check_doi_from_to(doi = doi, from = from, to = to)
+  # Validate arguments
+  validate_args(from = from, to = to, doi = doi,
+                limit = limit, skip = skip, format = format)
 
   # Do queries
   if (!is.null(doi)) {
+    if(!is.null(from) | !is.null(to)) {
+      warning("Ignoring 'from' and 'to': cannot be provided with 'doi'",
+              call. = F, immediate. = T)
+    }
     content <- query_doi(doi = doi)
     data <- content$collection
   } else {
@@ -72,7 +73,7 @@ biorxiv_content <- function(from = NULL, to = NULL, doi = NULL,
       iterations <- ceiling(limit / max_results_per_page) - 1
       for (i in 1:iterations) {
         cursor <- skip + (i * max_results_per_page)
-        content <- query_interval(from = from, to = to, cursor = cursor)
+        content <- query_interval(from = from, to = to, skip = cursor)
         data <- c(data, content$collection)
       }
     }
