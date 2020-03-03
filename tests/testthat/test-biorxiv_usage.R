@@ -1,46 +1,41 @@
 test_that("biorxiv_usage returns", {
 
-  # Queries to run
-  basic <- biorxiv_usage()
-  interval_m <- biorxiv_usage(interval = "m")
-  # Ignore for now - for some reason bioRxiv API is failing when requesting
-  # annual data
-  # interval_y <- biorxiv_usage(interval = "y")
-  format_list <- biorxiv_usage(format = "list")
-  format_json <- biorxiv_usage(format = "json")
-  format_df <- biorxiv_usage(format = "df")
+  # Basic Query
+  expect_is(biorxiv_usage(), "list")
 
-  # Correct class
-  expect_is(basic, "list")
-  expect_is(interval_m, "list")
-  # expect_is(interval_y, "list")
-  expect_is(format_list, "list")
-  expect_is(format_json, "json")
-  expect_is(format_df, "data.frame")
+  # Intervals
+  expect_is(biorxiv_usage(interval = "m"), "list")
+  # expect_is(biorxiv_usage(interval = "y"), "list")
+
+  # Formats
+  expect_is(biorxiv_usage(format = "list"), "list")
+  expect_is(biorxiv_usage(format = "json"), "json")
+  expect_is(biorxiv_usage(format = "df"), "data.frame")
 
   # Correct column names and types for data frame
   col_names <- c("month", "abstract_views", "full_text_views",
                  "pdf_downloads", "abstract_cumulative",
                  "full_text_cumulative", "pdf_cumulative")
-  expect_named(format_df, col_names)
-  expect_is(format_df$month, "character")
-  expect_is(format_df$abstract_views, "numeric")
-  expect_is(format_df$full_text_views, "numeric")
-  expect_is(format_df$pdf_downloads, "numeric")
-  expect_is(format_df$abstract_cumulative, "numeric")
-  expect_is(format_df$full_text_cumulative, "numeric")
-  expect_is(format_df$pdf_cumulative, "numeric")
+  d <- biorxiv_usage(format = "df")
+  expect_named(d, col_names)
+  expect_is(d$month, "character")
+  expect_is(d$abstract_views, "numeric")
+  expect_is(d$full_text_views, "numeric")
+  expect_is(d$pdf_downloads, "numeric")
+  expect_is(d$abstract_cumulative, "numeric")
+  expect_is(d$full_text_cumulative, "numeric")
+  expect_is(d$pdf_cumulative, "numeric")
 
 })
 
 test_that("biorxiv_usage fails correctly", {
 
-  # Wrong interval
+  # Invalid interval
   expect_error(biorxiv_usage(interval = ""))
   expect_error(biorxiv_usage(interval = 1))
   expect_error(biorxiv_usage(interval = "a"))
 
-  # Wrong format
+  # Invalid format
   expect_error(biorxiv_usage(format = ""))
   expect_error(biorxiv_usage(format = 1))
   expect_error(biorxiv_usage(format = "a"))
