@@ -47,10 +47,6 @@ test_that("biorxiv_content fails correctly", {
   expect_error(biorxiv_content(doi = 1))
   expect_error(biorxiv_content(doi = "a"))
 
-  # Warning when DOI and dates used together
-  expect_warning(biorxiv_content(doi = "10.1101/673665",
-                                 from = "2014-01-01", to = "2014-01-30"))
-
   # Invalid dates
   expect_error(biorxiv_content(from = "01-01-2014", to = "01-10-2014"))
   expect_error(biorxiv_content(from = "2014-01", to = "2014-01"))
