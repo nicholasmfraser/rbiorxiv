@@ -1,17 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-rbiorxiv
-========
+
+# rbiorxiv
 
 R client for interacting with the [bioRxiv API](https://api.biorxiv.org)
 
 **NOTES**
 
--   This is a work in progress
--   The bioRxiv API is in beta and subject to change
+  - This is a work in progress
+  - The bioRxiv API is in beta and subject to change
 
-Installation
-------------
+## Installation
 
 Install the development version from Github:
 
@@ -24,14 +23,16 @@ devtools::install_github("nicholasmfraser/rbiorxiv")
 library(rbiorxiv)
 ```
 
-Usage
------
+## Usage
 
-The main functions in `rbiorxiv` generally conform to the API endpoints outlined in the API documentation ([see here](https://api.biorxiv.org/)).
+The main functions in `rbiorxiv` generally conform to the API endpoints
+outlined in the API documentation ([see
+here](https://api.biorxiv.org/)).
 
 ### Content detail
 
-Retrieve details of either a set of preprints deposited between two dates, or lookup a single preprint by DOI:
+Retrieve details of either a set of preprints deposited between two
+dates, or lookup a single preprint by DOI:
 
 ``` r
 # Get details of preprints deposited between 2018-01-01 and 2018-01-10
@@ -55,9 +56,23 @@ biorxiv_content(from = "2018-01-01", to = "2018-01-10", format = "df")
 biorxiv_content(doi = "10.1101/833400")
 ```
 
+The bioRxiv API currently also allows querying of details of medRxiv
+preprints, by supplying a “server” parameter. This can be specified as
+follows:
+
+``` r
+# Get details of medRxiv preprints deposited between 2020-01-01 and 2020-01-02
+biorxiv_content(server = "medrxiv", from = "2020-01-01", to = "2020-01-02")
+```
+
+The default server parameter is always “biorxiv”. Note that the
+following functions documented below are limited to bioRxiv only (at the
+time of writing).
+
 ### Published article detail
 
-Retrieve details of published articles associated with bioRxiv preprints that were published between two dates:
+Retrieve details of published articles associated with bioRxiv preprints
+that were published between two dates:
 
 ``` r
 # Get details of all articles published between 2018-01-01 and 2018-01-10
@@ -66,7 +81,8 @@ biorxiv_published(from = "2018-01-01", to = "2018-01-10", limit = "*", format = 
 
 ### Publisher article detail
 
-Retrieve details of articles published by a specific publisher (specified by their doi prefix) between two dates:
+Retrieve details of articles published by a specific publisher
+(specified by their doi prefix) between two dates:
 
 ``` r
 # Get details of all articles published by eLife (prefix = 10.7554) between 2018-01-01 and 2018-01-10
@@ -76,7 +92,8 @@ biorxiv_publisher(prefix = "10.7554", from = "2018-01-01", to = "2018-01-10",
 
 ### Content summary statistics
 
-Retrieve summary statistics for bioRxiv content (e.g. number of preprints deposited):
+Retrieve summary statistics for bioRxiv content (e.g. number of
+preprints deposited):
 
 ``` r
 # Get summary statistics at a montly level
@@ -88,15 +105,18 @@ biorxiv_summary(interval = "y")
 
 ### Usage summary statistics
 
-Retrieve summary statistics for usage of bioRxiv content (e.g. number of pdf downloads):
+Retrieve summary statistics for usage of bioRxiv content (e.g. number of
+pdf downloads):
 
 ``` r
 # Get usage statistics at a montly level
 biorxiv_usage(interval = "m")
+
+# Get usage statistics at a yearly level
+biorxiv_usage(interval = "y")
 ```
 
-Examples
---------
+## Examples
 
 ### Growth of bioRxiv over time
 
@@ -188,7 +208,7 @@ biorxiv_published(from = "2013-11-01", to = "2018-12-31",
 
 ![](man/figures/biorxiv_time_to_publication.png)
 
-Contributing
-------------
+## Contributing
 
-Contributors are extremely welcome! Please contribute here directly, or contact me at <nicholasmfraser@gmail.com> for more information.
+Contributors are extremely welcome\! Please contribute here directly, or
+contact me at <nicholasmfraser@gmail.com> for more information.
