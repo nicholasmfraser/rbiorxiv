@@ -1,8 +1,9 @@
-validate_args <- function(from = NULL, to = NULL, doi = NULL, limit = NULL,
-                          skip = NULL, format = NULL, interval = NULL,
-                          prefix = NULL) {
+validate_args <- function(server = NULL, from = NULL, to = NULL, doi = NULL,
+                          limit = NULL, skip = NULL, format = NULL,
+                          interval = NULL, prefix = NULL) {
 
   # Validate individual arguments
+  if(!is.null(server)) check_server(server)
   if(!is.null(from)) check_date(from)
   if(!is.null(to)) check_date(to)
   if(!is.null(doi)) check_doi(doi)
@@ -12,6 +13,12 @@ validate_args <- function(from = NULL, to = NULL, doi = NULL, limit = NULL,
   if(!is.null(interval)) check_interval(interval)
   if(!is.null(prefix)) check_prefix(prefix)
 
+}
+
+check_server <- function(arg) {
+  if(!arg %in% c("biorxiv", "medrxiv")) {
+    stop("'server' parameter must be one of 'biorxiv' or 'medrxiv'", call. = F)
+  }
 }
 
 # Validate date format

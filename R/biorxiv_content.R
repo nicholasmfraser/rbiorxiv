@@ -1,12 +1,14 @@
-#' Retrieve details of bioRxiv preprints
+#' Retrieve details of bioRxiv or medRxiv preprints
 #'
 #' @export
-#' @param from (date) The date from when details of bioRxiv preprints should
+#' @param server (character) The preprint server to be queried; value must be
+#' one of "biorxiv" or "medrxiv". Default: `biorxiv`
+#' @param from (date) The date from when details of preprints should
 #' be collected. Date must be supplied in `YYYY-MM-DD` format. Default: `NULL`
-#' @param to (date) The date until when details of bioRxiv preprints should
+#' @param to (date) The date until when details of preprints should
 #' be collected. Date must be supplied in `YYYY-MM-DD` format. Default: `NULL`
 #' @param doi (character) A single digital object identifier (DOI) of a
-#' bioRxiv preprint. `doi` cannot be used with `from` and `to` arguments.
+#' preprint. `doi` cannot be used with `from` and `to` arguments.
 #' Default: `NULL`
 #' @param limit (integer) The maximum number of results to return. Not
 #' relevant when querying a doi. Default: `100`
@@ -16,7 +18,7 @@
 #' frame `df` format. Default: `list`
 #'
 #' @section Beware:
-#' Querying for a DOI will only work for DOIs associated with bioRxiv
+#' Querying for a DOI will only work for DOIs associated with bioRxiv or medRxiv
 #'
 #' @examples \dontrun{
 #'
@@ -40,19 +42,34 @@
 #' # Lookup a preprint by DOI
 #' biorxiv_content(doi = "10.1101/833400")
 #' }
-biorxiv_content <- function(from = NULL, to = NULL, doi = NULL,
-                            limit = 100, skip = 0, format = "list") {
+biorxiv_content <- function(server = "biorxiv", from = NULL, to = NULL,
+                            doi = NULL, limit = 100, skip = 0, format = "list") {
 
-  # Validate arguments
-  validate_args(from = from, to = to, doi = doi,
-                limit = limit, skip = skip, format = format)
+  # Server cannot be NULL
+  if(is.null(server)) {
+    stop("'server' parameter is required; must be one of 'biorxiv' or 'medrxiv'", call. = F)
+  }
+
+  # Either a DOI or a date range must be specified
+  if(is.null(doi) & is.null(from) & is.null(to)) {
+    stop("'doi' or 'from' and 'to' parameters are required", call. = F)
+  }
+
+  # A DOI should not be specified with a date
+  if(!is.null(doi) & (!is.null(from) | !is.null(to))) {
+    warning(paste0("'doi' should not be specific with 'from' or 'to' parameters;",
+                   " defaulting to DOI query"), call. = F)
+  }
+
+  # Validate individual arguments
+  validate_args(server, from, to, doi, limit, skip, format)
 
   # Do queries
   if (!is.null(doi)) {
-    content <- query_doi(doi = doi)
+    content <- query_doi(server = server, doi = doi)
     data <- content$collection
   } else {
-    content <- query_interval(from = from, to = to, skip = skip)
+    content <- query_interval(server = server, from = from, to = to, skip = skip)
     count_results <- content$messages[[1]]$count
     total_results <- content$messages[[1]]$total
     if (limit == "*") {
@@ -69,7 +86,7 @@ biorxiv_content <- function(from = NULL, to = NULL, doi = NULL,
       iterations <- ceiling(limit / max_results_per_page) - 1
       for (i in 1:iterations) {
         cursor <- skip + (i * max_results_per_page)
-        content <- query_interval(from = from, to = to, skip = cursor)
+        content <- query_interval(server = server, from = from, to = to, skip = cursor)
         data <- c(data, content$collection)
       }
       if(limit < length(data)) {
@@ -81,15 +98,15 @@ biorxiv_content <- function(from = NULL, to = NULL, doi = NULL,
 }
 
 # Send a query to the content endpoint with a DOI
-query_doi <- function(doi) {
-  url <- paste0(base_url(), "/detail/", doi)
+query_doi <- function(server, doi) {
+  url <- paste0(base_url(), "/details/", server, "/", doi, "/na/json")
   content <- fetch_content(url = url)
   return(content)
 }
 
 # Send a query to the content endpoint with 'from' and 'to' dates
-query_interval <- function(from, to, skip) {
-  url <- paste0(base_url(), "/detail/", from, "/", to, "/", skip)
+query_interval <- function(server, from, to, skip) {
+  url <- paste0(base_url(), "/details/", server, "/", from, "/", to, "/", skip, "/json")
   content <- fetch_content(url = url)
   return(content)
 }

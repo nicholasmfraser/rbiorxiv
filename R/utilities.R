@@ -83,10 +83,12 @@ set_column_types <- function(df) {
     "biorxiv_doi",
     "category",
     "doi",
+    "license",
     "preprint_category",
     "preprint_title",
     "published",
     "published_doi",
+    "server",
     "title",
     "type")
 
@@ -106,7 +108,7 @@ set_column_types <- function(df) {
     "version"
   )
 
-  #date columns
+  # date columns
   cols_d <- c(
     "date",
     "month",

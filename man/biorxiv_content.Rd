@@ -2,9 +2,10 @@
 % Please edit documentation in R/biorxiv_content.R
 \name{biorxiv_content}
 \alias{biorxiv_content}
-\title{Retrieve details of bioRxiv preprints}
+\title{Retrieve details of bioRxiv or medRxiv preprints}
 \usage{
 biorxiv_content(
+  server = "biorxiv",
   from = NULL,
   to = NULL,
   doi = NULL,
@@ -14,14 +15,17 @@ biorxiv_content(
 )
 }
 \arguments{
-\item{from}{(date) The date from when details of bioRxiv preprints should
+\item{server}{(character) The preprint server to be queried; value must be
+one of "biorxiv" or "medrxiv". Default: \code{biorxiv}}
+
+\item{from}{(date) The date from when details of preprints should
 be collected. Date must be supplied in \code{YYYY-MM-DD} format. Default: \code{NULL}}
 
-\item{to}{(date) The date until when details of bioRxiv preprints should
+\item{to}{(date) The date until when details of preprints should
 be collected. Date must be supplied in \code{YYYY-MM-DD} format. Default: \code{NULL}}
 
 \item{doi}{(character) A single digital object identifier (DOI) of a
-bioRxiv preprint. \code{doi} cannot be used with \code{from} and \code{to} arguments.
+preprint. \code{doi} cannot be used with \code{from} and \code{to} arguments.
 Default: \code{NULL}}
 
 \item{limit}{(integer) The maximum number of results to return. Not
@@ -34,11 +38,11 @@ Default: \code{0}}
 frame \code{df} format. Default: \code{list}}
 }
 \description{
-Retrieve details of bioRxiv preprints
+Retrieve details of bioRxiv or medRxiv preprints
 }
 \section{Beware}{
 
-Querying for a DOI will only work for DOIs associated with bioRxiv
+Querying for a DOI will only work for DOIs associated with bioRxiv or medRxiv
 }
 
 \examples{
