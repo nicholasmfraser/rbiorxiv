@@ -10,7 +10,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# biorrxiv
+# rbiorxiv
 
 R client for interacting with the [bioRxiv API](https://api.biorxiv.org)
 
@@ -27,16 +27,16 @@ Install the development version from Github:
 
 # Install package
 install.packages("devtools")
-devtools::install_github("nicholasmfraser/biorrxiv")
+devtools::install_github("nicholasmfraser/rbiorxiv")
 
 # Load package
-library(biorrxiv)
+library(rbiorxiv)
 
 ```
 
 ## Usage
 
-The main functions in `biorrxiv` generally conform to the API endpoints outlined in the API documentation ([see here](https://api.biorxiv.org/)).
+The main functions in `rbiorxiv` generally conform to the API endpoints outlined in the API documentation ([see here](https://api.biorxiv.org/)).
 
 ### Content detail
 

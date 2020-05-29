@@ -14,7 +14,7 @@ test_that("biorxiv_content returns", {
   expect_is(biorxiv_content(from = "2014-01-01", to = "2014-03-30",
                             limit = "*"), "list")
 
-    # Format
+  # Formats
   expect_is(biorxiv_content(doi = "10.1101/673665", format = "list"), "list")
   expect_is(biorxiv_content(doi = "10.1101/673665", format = "json"), "json")
   expect_is(biorxiv_content(doi = "10.1101/673665", format = "df"), "data.frame")
@@ -44,13 +44,8 @@ test_that("biorxiv_content fails correctly", {
 
   # Invalid DOI
   expect_error(biorxiv_content(doi = ""))
-  expect_error(biorxiv_content(doi = "123456"))
-  expect_error(biorxiv_content(doi = "10.1101/123456"))
-  expect_error(biorxiv_content(doi = 10.1101/673665))
-
-  # Warning when DOI and dates used together
-  expect_warning(biorxiv_content(doi = "10.1101/673665",
-                                 from = "2014-01-01", to = "2014-01-30"))
+  expect_error(biorxiv_content(doi = 1))
+  expect_error(biorxiv_content(doi = "a"))
 
   # Invalid dates
   expect_error(biorxiv_content(from = "01-01-2014", to = "01-10-2014"))
@@ -60,8 +55,8 @@ test_that("biorxiv_content fails correctly", {
   expect_error(biorxiv_content(to = "2014-01-30"))
 
   # Invalid format
-  expect_error(biorxiv_content(format = ""))
-  expect_error(biorxiv_content(format = 1))
-  expect_error(biorxiv_content(format = "a"))
+  expect_error(biorxiv_content(doi = "10.1101/673665", format = ""))
+  expect_error(biorxiv_content(doi = "10.1101/673665", format = 1))
+  expect_error(biorxiv_content(doi = "10.1101/673665", format = "a"))
 
 })

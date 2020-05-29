@@ -1,4 +1,4 @@
 library(testthat)
-library(biorrxiv)
+library(rbiorxiv)
 
-test_check("biorrxiv")
+test_check("rbiorxiv")

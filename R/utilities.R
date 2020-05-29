@@ -55,6 +55,22 @@ data_to_df <- function(data) {
   return(df)
 }
 
+# Convert a column to character format
+to_character <- function(column) {
+  return(as.character(column))
+}
+
+# Convert a column to numeric format
+to_numeric <- function(column) {
+  return(as.numeric(as.character(column)))
+}
+
+# Convert a column to date format
+to_date <- function(column) {
+  # For now keep dates as character vector - can adjust this later
+  return(as.character(column))
+}
+
 # Manually set the types for each column in data frame
 set_column_types <- function(df) {
 
@@ -97,19 +113,6 @@ set_column_types <- function(df) {
     "preprint_date",
     "published_date"
   )
-
-  to_character <- function(column) {
-    return(as.character(column))
-  }
-
-  to_numeric <- function(column) {
-    return(as.numeric(as.character(column)))
-  }
-
-  to_date <- function(column) {
-    # For now keep dates as character vector - can adjust this later
-    return(as.character(column))
-  }
 
   df[, colnames(df) %in% cols_c] <- sapply(df[ , colnames(df) %in% cols_c],
                                           to_character)
