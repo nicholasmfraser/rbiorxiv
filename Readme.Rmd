@@ -212,6 +212,48 @@ biorxiv_published(from = "2013-11-01", to = "2018-12-31",
 
 ![](man/figures/biorxiv_time_to_publication.png)
 
+```{r fig.width = 10}
+
+library(tidyverse)
+library(lubridate) # Nice date handling
+library(viridis) # Nice color-blind friendly scales
+
+# Note that there some irregularities in the case of category names - here we
+# convert all categories to title case for consistency
+biorxiv_content(from = "2013-11-01", to = "2019-12-31", 
+                limit = "*", format = "df") %>%
+  filter(version == 1,
+         category != "") %>%
+  mutate(date = floor_date(date(date), unit = "month"),
+         category = str_to_title(category)) %>%
+  group_by(date, category) %>%
+  summarize(n = n()) %>%
+  ggplot() +
+  geom_bar(aes(x = date, y = n, fill = category),
+           stat = "identity", color = "white") +
+  labs(x = "",
+       y= "New preprints deposited (cumulative)",
+       fill = "",
+       title ="Growth of bioRxiv over time") +
+  scale_x_date(date_breaks = "3 months",
+               date_minor_breaks = "3 months",
+               date_labels = "%b-%y",
+               expand = c(0,0)) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_fill_viridis(discrete = T) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5),
+    axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)),
+    plot.title = element_text(face = "bold"),
+    legend.text = element_text(size = 6),
+    legend.key.size = unit(1, "line")
+  )
+
+```
+
+
+
 ## Contributing
 
 Contributors are extremely welcome! Please contribute here directly, or contact me at nicholasmfraser@gmail.com for more information.
