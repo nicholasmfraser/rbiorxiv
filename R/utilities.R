@@ -5,7 +5,7 @@ base_url <- function() {
 
 # Make query to API and return full response content
 fetch_content <- function(url) {
-  request <- httr::RETRY(verb = "GET", times = 3, url = url, httr::timeout(30))
+  request <- httr::GET(url = url)
   handle_response(request = request)
   content <- httr::content(request, as = "parsed")
   return(content)
