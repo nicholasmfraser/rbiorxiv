@@ -14,6 +14,12 @@ test_that("biorxiv_content returns", {
   expect_is(biorxiv_content(from = "2014-01-01", to = "2014-03-30",
                             limit = "*"), "list")
 
+  # Server
+  expect_is(biorxiv_content(server = "medrxiv",
+                            doi = "10.1101/2020.01.10.20017145"), "list")
+  expect_is(biorxiv_content(server = "medrxiv",
+                            from = "2020-01-01", to = "2020-01-02"), "list")
+
   # Formats
   expect_is(biorxiv_content(doi = "10.1101/673665", format = "list"), "list")
   expect_is(biorxiv_content(doi = "10.1101/673665", format = "json"), "json")
@@ -22,7 +28,7 @@ test_that("biorxiv_content returns", {
   # Column names and types for data frame
   col_names <- c("doi", "title", "authors", "author_corresponding",
                  "author_corresponding_institution", "date", "version", "type",
-                 "category", "abstract", "published")
+                 "license", "category", "abstract", "published", "server")
   d <- biorxiv_content(doi = "10.1101/673665", format = "df")
   expect_named(d, col_names)
   expect_is(d$doi, "character")
@@ -36,6 +42,8 @@ test_that("biorxiv_content returns", {
   expect_is(d$category, "character")
   expect_is(d$abstract, "character")
   expect_is(d$published, "character")
+  expect_is(d$license, "character")
+  expect_is(d$server, "character")
 
 })
 
@@ -46,6 +54,14 @@ test_that("biorxiv_content fails correctly", {
   expect_error(biorxiv_content(doi = ""))
   expect_error(biorxiv_content(doi = 1))
   expect_error(biorxiv_content(doi = "a"))
+
+  # Invalid server
+  expect_error(biorxiv_content(server = NULL,
+                               from = "01-01-2014", to = "01-10-2014"))
+  expect_error(biorxiv_content(server = 1,
+                               from = "01-01-2014", to = "01-10-2014"))
+  expect_error(biorxiv_content(server = "a",
+                               from = "01-01-2014", to = "01-10-2014"))
 
   # Invalid dates
   expect_error(biorxiv_content(from = "01-01-2014", to = "01-10-2014"))
