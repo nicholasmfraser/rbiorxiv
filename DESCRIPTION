@@ -1,13 +1,13 @@
 Package: rbiorxiv
 Type: Package
-Title: R client for the bioRxiv API
+Title: R Client for the bioRxiv API
 Version: 0.2.0
 Authors@R: c(person("Nicholas", "Fraser", email = "nicholasmfraser@gmail.com",
                     role = c("aut", "cre")))
-Description: rbiorxiv is an R client for interacting with the bioRxiv API
-    (https://api.biorxiv.org/). Functions include retrieving metadata of
-    preprints, details of published papers associated with preprints, and
-    summary and usage statistics.
+Description: R client for interacting with the bioRxiv API
+    <https://api.biorxiv.org/>. Functions include retrieving metadata of
+    bioRxiv and medRxiv preprints, details of published papers associated with 
+    preprints, and summary and usage statistics.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
