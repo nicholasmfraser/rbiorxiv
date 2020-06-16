@@ -1,0 +1,118 @@
+---
+title: "rbiorxiv"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{rbiorxiv}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## About bioRxiv and medRxiv
+
+[bioRxiv](https://www.biorxiv.org/) and [medRxiv](https://www.medrxiv.org/) are a preprint repositoris for the biological and medical sciences, respectively, both hosted by the [Cold Spring Harbor Laboratory](https://www.cshl.edu/) (CSHL).
+
+Metadata of preprints from both repositories can be accessed via a singular API service hosted on bioRxiv, available at [https://api.biorxiv.org](https://api.biorxiv.org/). This package, `rbiorxiv`, provides a simple interface for interacting with this API service, to allow retrieval of metadata for bioRxiv and medRxiv preprints.
+
+## Installation
+
+Install development version from Github
+
+```{r eval=FALSE}
+install.packages("devtools")
+devtools::install_github("nicholasmfraser/rbiorxiv")
+```
+
+Load package
+
+```{r eval=FALSE}
+library(rbiorxiv)
+```
+
+## Usage
+
+The main functions in `rbiorxiv` generally conform to the API endpoints outlined in the API documentation ([see here](https://api.biorxiv.org/)).
+
+### Content detail
+
+Retrieve details of either a set of preprints deposited between two dates, or lookup a single preprint by DOI:
+
+```{r eval=FALSE}
+# Get details of preprints deposited between 2018-01-01 and 2018-01-10
+# By default, only the first 100 records are returned
+biorxiv_content(from = "2018-01-01", to = "2018-01-10")
+
+# Set a limit to return more than 100 records
+biorxiv_content(from = "2018-01-01", to = "2018-01-10", limit = 200)
+
+# Or set limit as "*" to return all records
+biorxiv_content(from = "2018-01-01", to = "2018-01-10", limit = "*")
+
+# Skip the first 100 records
+biorxiv_content(from = "2018-01-01", to = "2018-01-10", limit = 200, skip = 100)
+
+# By default, data is returned in a list. Use the "format" argument to specify
+# that data should be returned in "json" format or as a data frame ("df").
+biorxiv_content(from = "2018-01-01", to = "2018-01-10", format = "df")
+
+# Lookup a preprint by DOI
+biorxiv_content(doi = "10.1101/833400")
+```
+
+The bioRxiv API currently also allows querying of details of medRxiv preprints, by supplying a "server" parameter. This can be specified as follows:
+
+```{r eval=FALSE}
+# Get details of medRxiv preprints deposited between 2020-01-01 and 2020-01-02
+biorxiv_content(server = "medrxiv", from = "2020-01-01", to = "2020-01-02")
+```
+
+The default server parameter is always "biorxiv". Note that the following functions documented below are limited to bioRxiv only (at the time of writing).
+
+### Published article detail
+
+Retrieve details of published articles associated with bioRxiv preprints that were published between two dates:
+
+```{r eval=FALSE}
+# Get details of all articles published between 2018-01-01 and 2018-01-10
+biorxiv_published(from = "2018-01-01", to = "2018-01-10", limit = "*", format = "df")
+```
+
+### Publisher article detail
+
+Retrieve details of articles published by a specific publisher (specified by their doi prefix) between two dates:
+
+```{r eval=FALSE}
+# Get details of all articles published by eLife (prefix = 10.7554) between 2018-01-01 and 2018-01-10
+biorxiv_publisher(prefix = "10.7554", from = "2018-01-01", to = "2018-01-10", 
+                   limit = "*", format = "df")
+```
+
+### Content summary statistics
+
+Retrieve summary statistics for bioRxiv content (e.g. number of preprints deposited):
+ 
+```{r eval=FALSE}
+# Get summary statistics at a montly level
+biorxiv_summary(interval = "m")
+
+# Get summary statistics at a yearly level
+biorxiv_summary(interval = "y")
+```
+ 
+### Usage summary statistics
+
+Retrieve summary statistics for usage of bioRxiv content (e.g. number of pdf downloads):
+
+```{r eval=FALSE}
+# Get usage statistics at a montly level
+biorxiv_usage(interval = "m")
+
+# Get usage statistics at a yearly level
+biorxiv_usage(interval = "y")
+```

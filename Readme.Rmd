@@ -14,11 +14,6 @@ knitr::opts_chunk$set(
 
 R client for interacting with the [bioRxiv API](https://api.biorxiv.org)
 
-**NOTES**
-
-* This is a work in progress
-* The bioRxiv API is in beta and subject to change
-
 ## Installation
 
 Install the development version from Github:
@@ -66,7 +61,7 @@ biorxiv_content(doi = "10.1101/833400")
 
 ```
 
-The bioRxiv API currently also allows querying of details of medRxiv preprints, by supplying a "server" parameter. This can be specified as follows:
+The bioRxiv API also allows querying of details of [medRxiv](https://www.medrxiv.org/) preprints, by supplying a "server" parameter. This can be specified as follows:
 
 ```{r eval=FALSE}
 # Get details of medRxiv preprints deposited between 2020-01-01 and 2020-01-02
