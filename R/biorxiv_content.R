@@ -106,6 +106,8 @@ query_doi <- function(server, doi) {
 
 # Send a query to the content endpoint with 'from' and 'to' dates
 query_interval <- function(server, from, to, skip) {
+  # make sure 'skip' parameter is not given in scientific notation, ie. 10e5
+  skip <- format(skip, scientific = FALSE)
   url <- paste0(base_url(), "/details/", server, "/", from, "/", to, "/", skip, "/json")
   content <- fetch_content(url = url)
   return(content)
