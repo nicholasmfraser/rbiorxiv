@@ -15,7 +15,7 @@
 #' @param format (character) Return data in list `list`, json `json` or data
 #' frame `df` format. Default: `list`
 #'
-#' @examples \dontrun{
+#' @examples \donttest{
 #'
 #' # Get details of articles published by eLife (doi prefix = 10.7554)
 #' # between 2018-01-01 and 2018-01-30

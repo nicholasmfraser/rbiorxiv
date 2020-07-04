@@ -32,7 +32,7 @@ frame \code{df} format. Default: \code{list}}
 Retrieve details of published articles with bioRxiv preprints
 }
 \examples{
-\dontrun{
+\donttest{
 
 # Get details of articles published between 2018-01-01 and 2018-01-10
 # By default, only the first 100 records are returned

@@ -38,7 +38,7 @@ Retrieve details of published articles with bioRxiv preprints by a specific
 publisher
 }
 \examples{
-\dontrun{
+\donttest{
 
 # Get details of articles published by eLife (doi prefix = 10.7554)
 # between 2018-01-01 and 2018-01-30

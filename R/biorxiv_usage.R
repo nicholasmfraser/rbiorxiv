@@ -6,7 +6,7 @@
 #' @param format (character) Return data in list `list`, json `json` or data
 #' frame `df` format. Default: `list`
 #'
-#' @examples \dontrun{
+#' @examples \donttest{
 #'
 #' # Return a list of monthly usage statistics
 #' biorxiv_usage(interval = "m")

@@ -20,7 +20,7 @@
 #' @section Beware:
 #' Querying for a DOI will only work for DOIs associated with bioRxiv or medRxiv
 #'
-#' @examples \dontrun{
+#' @examples \donttest{
 #'
 #' # Get details of preprints deposited between 2018-01-01 and 2018-01-10
 #' # By default, only the first 100 records are returned

@@ -17,7 +17,7 @@ frame \code{df} format. Default: \code{list}}
 Retrieve summary statistics for usage of bioRxiv content
 }
 \examples{
-\dontrun{
+\donttest{
 
 # Return a list of monthly usage statistics
 biorxiv_usage(interval = "m")
