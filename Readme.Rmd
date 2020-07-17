@@ -16,7 +16,19 @@ R client for interacting with the [bioRxiv API](https://api.biorxiv.org)
 
 ## Installation
 
-Install the development version from Github:
+Install from CRAN:
+
+```{r eval=FALSE}
+
+# Install package
+install.packages("rbiorxiv")
+
+# Load package
+library(rbiorxiv)
+
+```
+
+Or install the development version from Github (using the [devtools](https://cran.r-project.org/web/packages/devtools/index.html) package):
 
 ```{r eval=FALSE}
 

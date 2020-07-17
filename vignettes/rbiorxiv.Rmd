@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ## About bioRxiv and medRxiv
 
-[bioRxiv](https://www.biorxiv.org/) and [medRxiv](https://www.medrxiv.org/) are a preprint repositoris for the biological and medical sciences, respectively, both hosted by the [Cold Spring Harbor Laboratory](https://www.cshl.edu/) (CSHL).
+[bioRxiv](https://www.biorxiv.org/) and [medRxiv](https://www.medrxiv.org/) are preprint repositories for the biological and medical sciences, respectively, both hosted by the [Cold Spring Harbor Laboratory](https://www.cshl.edu/) (CSHL).
 
 Metadata of preprints from both repositories can be accessed via a singular API service hosted on bioRxiv, available at [https://api.biorxiv.org](https://api.biorxiv.org/). This package, `rbiorxiv`, provides a simple interface for interacting with this API service, to allow retrieval of metadata for bioRxiv and medRxiv preprints.
 

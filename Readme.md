@@ -7,7 +7,19 @@ R client for interacting with the [bioRxiv API](https://api.biorxiv.org)
 
 ## Installation
 
-Install the development version from Github:
+Install from CRAN:
+
+``` r
+# Install package
+install.packages("rbiorxiv")
+
+# Load package
+library(rbiorxiv)
+```
+
+Or install the development version from Github (using the
+[devtools](https://cran.r-project.org/web/packages/devtools/index.html)
+package):
 
 ``` r
 # Install package
@@ -51,9 +63,9 @@ biorxiv_content(from = "2018-01-01", to = "2018-01-10", format = "df")
 biorxiv_content(doi = "10.1101/833400")
 ```
 
-The bioRxiv API currently also allows querying of details of medRxiv
-preprints, by supplying a “server” parameter. This can be specified as
-follows:
+The bioRxiv API also allows querying of details of
+[medRxiv](https://www.medrxiv.org/) preprints, by supplying a “server”
+parameter. This can be specified as follows:
 
 ``` r
 # Get details of medRxiv preprints deposited between 2020-01-01 and 2020-01-02
