@@ -144,14 +144,14 @@ library(tidyverse)
 # Note that month dates are returned in YYYY-MM format - here we convert
 # month dates to YYYY-MM-DD format to make plotting easier
 biorxiv_summary(interval = "m", format = "df") %>%
-  mutate(month = as.Date(paste0(month, "-01", format = "%Y-%m-%d"))) %>%
+  mutate(month = as.Date(paste0(month, "-01"), format = "%Y-%m-%d")) %>%
   ggplot() +
   geom_bar(aes(x = month, y = new_papers_cumulative),
            fill = "#cccccc",
            stat = "identity") +
   labs(x = "",
-       y= "New preprints deposited (cumulative)",
-       title ="Growth of bioRxiv over time") +
+       y= "Submissions",
+       title ="Cumulative new bioRxiv submissions") +
   scale_x_date(date_breaks = "3 months",
                date_minor_breaks = "3 months",
                date_labels = "%b-%y",
@@ -203,6 +203,8 @@ biorxiv_usage(interval = "m", format = "df") %>%
 
 ### Time to publication
 
+#### 
+
 ```{r eval=FALSE}
 
 library(tidyverse)
@@ -230,10 +232,42 @@ biorxiv_published(from = "2013-11-01", to = "2018-12-31",
 
 ![](man/figures/biorxiv_time_to_publication.png)
 
+####
+
+```{r eval=FALSE}
+
+library(tidyverse)
+
+# Calculate the number of days between preprint deposition and 
+# journal publication. Plot results as a histogram.
+biorxiv_published(from = "2013-11-01", to = "2018-12-31", 
+                  limit = "*", format = "df") %>%
+  mutate(days = as.Date(published_date) - as.Date(preprint_date)) %>%
+  ggplot() +
+  geom_histogram(aes(as.numeric(days)),
+                 binwidth = 1,
+                 fill = "#cccccc") +
+  labs(x = "Days between preprint deposition and journal publication",
+       y= "Number of articles",
+       title ="Time to publication") +
+  coord_cartesian(xlim = c(-100, 1000)) +
+  theme_minimal() +
+  theme(
+    axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)),
+    plot.title = element_text(face = "bold")
+  )
+
+```
+
+## Other tools/packages for working medRxiv/bioRxiv data
+
+`rbiorxiv` aims to provide a simple wrapper around the main endpoints of the [bioRxiv API](https://api.biorxiv.org/), and return data for further analysis/manipulation by the R user. Below are some additional packages that provide distinct but related functionality when working with bioRxiv and medRxiv data:
+
+* [`medrxivr`](https://github.com/ropensci/medrxivr), developed by [Luke McGuiness](https://github.com/mcguinlu) and part of the ROpenSci (https://ropensci.org/) ecosystem, provides users with more powerful tools to download bioRxiv and medRxiv data, and search downloaded preprint records using regular expressions and Boolean login. `medrxivr` also allows users to export their search results to a .BIB file for easy import to a reference manager, and to download the full-text PDFs of preprints matching their search criteria.
+
 ## Contributing
 
-Contributors are extremely welcome! Please contribute here directly, or contact me at nicholasmfraser@gmail.com for more information.
-
+Contributors are welcome, and agree to abide by the [contributor code of conduct](https://github.com/nicholasmfraser/rbiorxiv/blob/master/CODE_OF_CONDUCT.md).
 
 
 
