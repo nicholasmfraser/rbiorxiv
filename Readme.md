@@ -190,8 +190,6 @@ biorxiv_usage(interval = "m", format = "df") %>%
 
 ### Time to publication
 
-#### 
-
 ``` r
 library(tidyverse)
 
@@ -216,8 +214,6 @@ biorxiv_published(from = "2013-11-01", to = "2018-12-31",
 ```
 
 ![](man/figures/biorxiv_time_to_publication.png)
-
-#### 
 
 ``` r
 library(tidyverse)
