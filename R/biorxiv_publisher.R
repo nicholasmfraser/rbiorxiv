@@ -42,8 +42,8 @@ biorxiv_publisher <- function(prefix = NULL, from = NULL, to = NULL,
                               limit = 100, skip = 0, format = "list") {
 
   # Validate individual arguments
-  validate_args(from = from, to = to, limit = limit,
-                skip = skip, format = format)
+  validate_args(prefix = prefix, from = from, to = to,
+                limit = limit, skip = skip, format = format)
 
   # Do queries
   url <- paste0(base_url(), "/publisher/", prefix, "/",
