@@ -223,9 +223,9 @@ analysis/manipulation by the R user. Below are some additional packages
 that provide distinct but related functionality when working with
 bioRxiv and medRxiv data:
 
-  - [`medrxivr`](https://github.com/ropensci/medrxivr), developed by
+-   [`medrxivr`](https://github.com/ropensci/medrxivr), developed by
     [Luke McGuiness](https://github.com/mcguinlu) and part of the
-    ROpenSci (<https://ropensci.org/>) ecosystem, provides users with
+    [ROpenSci](https://ropensci.org/) ecosystem, provides users with
     more powerful tools to download bioRxiv and medRxiv data, and search
     downloaded preprint records using regular expressions and Boolean
     login. `medrxivr` also allows users to export their search results

@@ -5,28 +5,37 @@ base_url <- function() {
 
 # Make query to API and return full response content
 fetch_content <- function(url) {
-  request <- httr::GET(url = url)
+  check_internet_connection()
+  request <- httr::RETRY(verb = "GET",
+                         url = url,
+                         times = 5,
+                         pause_base = 1,
+                         pause_cap = 60)
   handle_response(request = request)
   content <- httr::content(request, as = "parsed")
   return(content)
 }
 
+# Check internet connection
+check_internet_connection <- function() {
+  if (curl::has_internet() == FALSE) {
+    stop("No internet connection detected. ",
+         "Please connect to the internet and try again.",
+         call. = F)
+  return(invisible(NULL))
+  }
+}
+
 # Handle HTTP responses
 handle_response <- function(request) {
   if (request$status_code == 200) {
-    status <- unlist(httr::content(request, as = "parsed")$messages)["status"]
-    if (status != "ok") {
-      stop(status, call. = F)
+    message <- httr::content(request, as = "text")
+    if (message == "Error : (2002) Connection refused") {
+      stop("Connection refused. The server may be experiencing high loads.",
+      " Please try again later.", call. = F)
     }
-  } else if (request$status_code == 404) {
-    stop("404: Page not found", call. = F)
-  } else if (request$status_code == 500) {
-    stop("500: Internal server error", call. = F)
-  } else if (request$status_code == 400) {
-    stop("400: Bad request", call. = F)
-  } else {
-    stop("Something went wrong", call. = F)
   }
+  httr::stop_for_status(request)
 }
 
 # Return the data in the requested format
