@@ -18,7 +18,11 @@
 #' biorxiv_usage(interval = "y")
 #' }
 biorxiv_usage <- function(interval = "m", format = "list") {
+
+  check_internet_connection()
+
   validate_args(interval = interval, format = format)
+
   url <- paste0(base_url(), "/usage/", interval)
   content <- fetch_content(url = url)
   data <- content$`bioRxiv content statistics`

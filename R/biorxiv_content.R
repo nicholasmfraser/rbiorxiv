@@ -45,6 +45,8 @@
 biorxiv_content <- function(server = "biorxiv", from = NULL, to = NULL,
                             doi = NULL, limit = 100, skip = 0, format = "list") {
 
+  check_internet_connection()
+
   # Server cannot be NULL
   if(is.null(server)) {
     stop("'server' parameter is required; must be one of 'biorxiv' or 'medrxiv'", call. = F)

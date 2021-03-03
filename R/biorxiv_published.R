@@ -34,6 +34,8 @@
 biorxiv_published <- function(from = NULL, to = NULL, limit = 100,
                               skip = 0, format = "list") {
 
+  check_internet_connection()
+
   # Validate individual arguments
   validate_args(from = from, to = to, limit = limit,
                 skip = skip, format = format)

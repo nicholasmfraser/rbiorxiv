@@ -18,7 +18,11 @@
 #' biorxiv_summary(interval = "y")
 #' }
 biorxiv_summary <- function(interval = "m", format = "list") {
+
+  check_internet_connection()
+
   validate_args(interval = interval, format = format)
+
   url <- paste0(base_url(), "/sum/", interval)
   content <- fetch_content(url = url)
   data <- content$`bioRxiv content statistics`
