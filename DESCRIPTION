@@ -11,6 +11,7 @@ Description: R client for interacting with the 'bioRxiv' API
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Language: en-US
 URL: https://github.com/nicholasmfraser/rbiorxiv
 BugReports: https://github.com/nicholasmfraser/rbiorxiv/issues
 Imports:
