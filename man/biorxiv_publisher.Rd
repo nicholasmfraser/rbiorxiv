@@ -43,22 +43,22 @@ publisher
 # Get details of articles published by eLife (doi prefix = 10.7554)
 # between 2018-01-01 and 2018-01-30
 # By default, only the first 100 records are returned
-biorxiv_publisher(prefix = "10.7554", from = "2018-01-01", to = "2018-01-10")
+biorxiv_publisher(prefix = "10.7554", from = "2017-01-01", to = "2018-01-01")
 
 # Set a limit to return more than 100 records
-biorxiv_publisher(prefix = "10.7554", from = "2018-01-01", to = "2018-01-30",
+biorxiv_publisher(prefix = "10.7554", from = "2017-01-01", to = "2018-01-01",
                   limit = 200)
 
 # Set limit as "*" to return all records
-biorxiv_publisher(prefix = "10.7554", from = "2018-01-01", to = "2018-01-30",
+biorxiv_publisher(prefix = "10.7554", from = "2017-01-01", to = "2018-01-01",
                   limit = "*")
 
 # Skip the first 100 records
-biorxiv_publisher(prefix = "10.7554", from = "2018-01-01", to = "2018-01-30",
+biorxiv_publisher(prefix = "10.7554", from = "2017-01-01", to = "2018-01-01",
                   limit = 200, skip = 100)
 
 # Specify the format to return data
-biorxiv_publisher(prefix = "10.7554", from = "2018-01-01", to = "2018-01-30",
+biorxiv_publisher(prefix = "10.7554", from = "2017-01-01", to = "2018-01-01",
                   format = "df")
 }
 }
