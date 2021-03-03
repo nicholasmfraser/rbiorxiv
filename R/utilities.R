@@ -5,14 +5,15 @@ base_url <- function() {
 
 # Make query to API and return full response content
 fetch_content <- function(url) {
-  check_internet_connection()
   request <- httr::RETRY(verb = "GET",
                          url = url,
                          times = 5,
                          pause_base = 1,
-                         pause_cap = 60)
+                         pause_cap = 60,
+                         httr::timeout(60))
   handle_response(request = request)
   content <- httr::content(request, as = "parsed")
+  Sys.sleep(1) # Add a 1-second pause between each API call
   return(content)
 }
 
@@ -29,10 +30,16 @@ check_internet_connection <- function() {
 # Handle HTTP responses
 handle_response <- function(request) {
   if (request$status_code == 200) {
-    message <- httr::content(request, as = "text")
+    message <- httr::content(request, as = "text", encoding = "UTF-8")
     if (message == "Error : (2002) Connection refused") {
       stop("Connection refused. The server may be experiencing high loads.",
-      " Please try again later.", call. = F)
+           " Please try again later.", call. = F)
+    }
+    status <- unlist(httr::content(request, as = "parsed")$messages)["status"]
+    if (status == "no articles found") {
+      stop("No articles found. ",
+           "Please adjust query parameters and try again.",
+           call. = F)
     }
   }
   httr::stop_for_status(request)
