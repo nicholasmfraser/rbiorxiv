@@ -10,6 +10,7 @@ The package maintainer was unable to react to the policy violation prior to the 
 This submission addresses the above violation and makes some additional minor improvements.
 
 ## Test environments
+- local R installation, R 4.0.1
 - R-hub windows-x86_64-devel (r-devel)
 - R-hub ubuntu-gcc-release (r-release)
 - R-hub fedora-clang-devel (r-devel)
