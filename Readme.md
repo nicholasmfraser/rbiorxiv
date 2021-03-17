@@ -18,8 +18,7 @@ library(rbiorxiv)
 ```
 
 Or install the development version from Github (using the
-[devtools](https://cran.r-project.org/web/packages/devtools/index.html)
-package):
+[devtools](https://CRAN.R-project.org/package=devtools) package):
 
 ``` r
 # Install package

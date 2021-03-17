@@ -28,7 +28,7 @@ library(rbiorxiv)
 
 ```
 
-Or install the development version from Github (using the [devtools](https://cran.r-project.org/web/packages/devtools/index.html) package):
+Or install the development version from Github (using the [devtools](https://CRAN.R-project.org/package=devtools) package):
 
 ```{r eval=FALSE}
 
