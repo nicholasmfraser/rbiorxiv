@@ -45,6 +45,7 @@
 biorxiv_content <- function(server = "biorxiv", from = NULL, to = NULL,
                             doi = NULL, limit = 100, skip = 0, format = "list") {
 
+  # Check internet connection is available
   check_internet_connection()
 
   # Server cannot be NULL
@@ -66,51 +67,129 @@ biorxiv_content <- function(server = "biorxiv", from = NULL, to = NULL,
   # Validate individual arguments
   validate_args(server, from, to, doi, limit, skip, format)
 
-  # Do queries
+  # If a DOI is provided, query on DOI route
   if (!is.null(doi)) {
-    content <- query_doi(server = server, doi = doi)
-    data <- content$collection
-  } else {
-    content <- query_interval(server = server, from = from, to = to, skip = skip)
-    count_results <- content$messages[[1]]$count
-    total_results <- content$messages[[1]]$total
-    if (limit == "*") {
-      limit <- total_results - skip
+
+    # Generate URL for query
+    url <- build_content_doi_url(server = server, doi = doi)
+
+    # Make query
+    content = fetch_content(url = url)
+
+    # Throw error if no results returned
+    if(is.null(content)) {
+      stop("No posts found. Please check query parameters and try again.",
+           call. = F)
     }
+
+    data <- content$collection
+
+  # If "from" and "to" parameters are provided, query on interval route
+  } else {
+
+    # Generate URL for query
+    url <- build_content_interval_url(server = server, from = from, to = to, skip = skip)
+
+    # Make initial query
+    content <- fetch_content(url = url)
+
+    # Throw error if no results returned
+    if(is.null(content)) {
+      stop("No posts found. Please check query parameters and try again.",
+           call. = F)
+    }
+
+    # Count returned resulted
+    count_results <- content$messages[[1]]$count
+
+    # Count expected results. The expected number of results returned may
+    # differ from the actual number returned
+    expected_results <- content$messages[[1]]$total
+
+    # Maximum number of results returned per query is 100
     max_results_per_page <- 100
+
+    # If user requests all results, set limit to maximum number of expected
+    # results minus the number of skipped records
+    if (limit == "*") {
+      limit <- expected_results - skip
+    }
+
+    # If the limit is less than the number of returned results, return only
+    # those up to the limit
     if (limit <= count_results) {
       data <- content$collection[1:limit]
+
+    # If the number of returned results is less than the maximum returned in
+    # one page, return all results
     } else if (count_results < max_results_per_page) {
-      limit <- count_results
-      data <- content$collection[1:limit]
+      data <- content$collection
+
+    # If the number of returned results is less than the number of requested or
+    # expected results, we iterate over each page. The number of iterations is
+    # based on the number of expected results, but iteration is stopped when
+    # less results are returned than expected
     } else {
       data <- content$collection
+
+      # Calculate number of iterations
       iterations <- ceiling(limit / max_results_per_page) - 1
+
+      # Do iterations
       for (i in 1:iterations) {
+
+        # Don't hit the API too hard - limit requests to one per second
+        Sys.sleep(1)
+
+        # Generate query cursor
         cursor <- skip + (i * max_results_per_page)
-        content <- query_interval(server = server, from = from, to = to, skip = cursor)
+
+        # Generate URL for query
+        url <- build_content_interval_url(server = server,
+                                          from = from,
+                                          to = to,
+                                          skip = cursor)
+        # Make query
+        content <- fetch_content(url)
+
+        # If no more results returned, end iteration
+        if(is.null(content)) {
+          break
+        }
         data <- c(data, content$collection)
+
+        # Count the number of results returned in iteration
+        count_results <- content$messages[[1]]$count
+
+        # If number of results returned is less than expected in a whole page,
+        # end iteration
+        if(count_results < max_results_per_page) {
+          break
+        }
       }
+
+      # If the limit is less than the number of returned results, return only
+      # those up to the limit
       if(limit < length(data)) {
         data <- data[1:limit]
       }
     }
   }
+
+  # Return data in requested format
   return_data(data = data, format = format)
 }
 
-# Send a query to the content endpoint with a DOI
-query_doi <- function(server, doi) {
+# Build the query url for the content endpoint with a DOI
+build_content_doi_url <- function(server, doi) {
   url <- paste0(base_url(), "/details/", server, "/", doi, "/na/json")
-  content <- fetch_content(url = url)
-  return(content)
+  return(url)
 }
 
-# Send a query to the content endpoint with 'from' and 'to' dates
-query_interval <- function(server, from, to, skip) {
+# Build the query url for the content endpoint with 'from' and 'to' dates
+build_content_interval_url <- function(server, from, to, skip) {
   # make sure 'skip' parameter is not given in scientific notation, ie. 10e5
   skip <- format(skip, scientific = FALSE)
   url <- paste0(base_url(), "/details/", server, "/", from, "/", to, "/", skip, "/json")
-  content <- fetch_content(url = url)
-  return(content)
+  return(url)
 }
