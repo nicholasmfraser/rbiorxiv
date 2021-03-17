@@ -19,6 +19,7 @@
 #' }
 biorxiv_summary <- function(interval = "m", format = "list") {
 
+  # Check internet connection is available
   check_internet_connection()
 
   validate_args(interval = interval, format = format)

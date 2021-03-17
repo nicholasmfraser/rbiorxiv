@@ -40,7 +40,7 @@
 #' }
 biorxiv_publisher <- function(prefix = NULL, from = NULL, to = NULL,
                               limit = 100, skip = 0, format = "list") {
-
+  # Check internet connection is available
   check_internet_connection()
 
   # Validate individual arguments
