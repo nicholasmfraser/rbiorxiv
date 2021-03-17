@@ -20,7 +20,8 @@ Imports:
     curl (>= 4.3)
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
-Suggests: 
+Suggests:
+    spelling, 
     testthat (>= 2.1.0),
     knitr,
     rmarkdown
