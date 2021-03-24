@@ -74,7 +74,7 @@ biorxiv_content <- function(server = "biorxiv", from = NULL, to = NULL,
     url <- build_content_doi_url(server = server, doi = doi)
 
     # Make query
-    content = fetch_content(url = url)
+    content = do_query(url = url)
 
     # Throw error if no results returned
     if(is.null(content)) {
@@ -88,10 +88,11 @@ biorxiv_content <- function(server = "biorxiv", from = NULL, to = NULL,
   } else {
 
     # Generate URL for query
-    url <- build_content_interval_url(server = server, from = from, to = to, skip = skip)
+    url <- build_content_interval_url(server = server, from = from,
+                                           to = to, skip = skip)
 
     # Make initial query
-    content <- fetch_content(url = url)
+    content <- do_query(url = url)
 
     # Throw error if no results returned
     if(is.null(content)) {
@@ -150,7 +151,7 @@ biorxiv_content <- function(server = "biorxiv", from = NULL, to = NULL,
                                           to = to,
                                           skip = cursor)
         # Make query
-        content <- fetch_content(url)
+        content <- do_query(url)
 
         # If no more results returned, end iteration
         if(is.null(content)) {
@@ -178,18 +179,4 @@ biorxiv_content <- function(server = "biorxiv", from = NULL, to = NULL,
 
   # Return data in requested format
   return_data(data = data, format = format)
-}
-
-# Build the query url for the content endpoint with a DOI
-build_content_doi_url <- function(server, doi) {
-  url <- paste0(base_url(), "/details/", server, "/", doi, "/na/json")
-  return(url)
-}
-
-# Build the query url for the content endpoint with 'from' and 'to' dates
-build_content_interval_url <- function(server, from, to, skip) {
-  # make sure 'skip' parameter is not given in scientific notation, ie. 10e5
-  skip <- format(skip, scientific = FALSE)
-  url <- paste0(base_url(), "/details/", server, "/", from, "/", to, "/", skip, "/json")
-  return(url)
 }

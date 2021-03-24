@@ -22,10 +22,19 @@ biorxiv_usage <- function(interval = "m", format = "list") {
   # Check internet connection is available
   check_internet_connection()
 
+  # Validate individual arguments
   validate_args(interval = interval, format = format)
 
+  # Generate URL for query
   url <- paste0(base_url(), "/usage/", interval)
-  content <- fetch_content(url = url)
+
+  # Make query
+  content <- do_query(url = url)
+
+  # Extract data
   data <- content$`bioRxiv content statistics`
+
+  # Return data in requested format
   return_data(data = data, format = format)
 }
+

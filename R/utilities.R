@@ -3,6 +3,36 @@ base_url <- function() {
   return("https://api.biorxiv.org")
 }
 
+# Build the query url for the content endpoint with a DOI
+build_content_doi_url <- function(server, doi) {
+  url <- paste0(base_url(), "/details/", server, "/", doi)
+  return(url)
+}
+
+# Build the query url for the content endpoint with 'from' and 'to' dates
+build_content_interval_url <- function(server, from, to, skip) {
+  # make sure 'skip' parameter is not given in scientific notation, ie. 10e5
+  skip <- format(skip, scientific = FALSE)
+  url <- paste0(base_url(), "/details/", server, "/", from, "/", to, "/", skip)
+  return(url)
+}
+
+# Build the query url for the publisher endpoint
+build_publisher_url <- function(prefix, from, to, skip) {
+  # make sure 'skip' parameter is not given in scientific notation, ie. 10e5
+  skip <- format(skip, scientific = FALSE)
+  url <- paste0(base_url(), "/publisher/", prefix, "/", from, "/", to, "/", skip)
+  return(url)
+}
+
+# Build the query url for the published endpoint
+build_published_url <- function(from, to, skip) {
+  # make sure 'skip' parameter is not given in scientific notation, ie. 10e5
+  skip <- format(skip, scientific = FALSE)
+  url <- paste0(base_url(), "/pub/", from, "/", to, "/", skip)
+  return(url)
+}
+
 # Check internet connection
 check_internet_connection <- function() {
   if (curl::has_internet() == FALSE) {
@@ -13,7 +43,7 @@ check_internet_connection <- function() {
 }
 
 # Make query to API and return full response content
-fetch_content <- function(url) {
+do_query <- function(url) {
   request <- httr::RETRY(verb = "GET",
                          url = url,
                          pause_base = 1,
@@ -157,3 +187,5 @@ set_column_types <- function(df) {
                                           to_date)
   return(df)
 }
+
+
