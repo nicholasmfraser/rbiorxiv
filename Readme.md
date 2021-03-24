@@ -122,6 +122,13 @@ biorxiv_usage(interval = "m")
 biorxiv_usage(interval = "y")
 ```
 
+## API rate and usage limits
+
+No rate or usage limits are currently specified for the bioRxiv API,
+*however* all functions in this package enforce a 1-second timeout per
+API call when iterating through multiple pages of results (a single API
+call currently returns a maximum of 100 results per page).
+
 ## Examples
 
 ### Growth of bioRxiv over time
@@ -231,8 +238,3 @@ bioRxiv and medRxiv data:
     to a .BIB file for easy import to a reference manager, and to
     download the full-text PDFs of preprints matching their search
     criteria.
-
-## Contributing
-
-Contributors are welcome, and agree to abide by the [contributor code of
-conduct](https://github.com/nicholasmfraser/rbiorxiv/blob/master/CODE_OF_CONDUCT.md).
