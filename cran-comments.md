@@ -10,7 +10,6 @@ The package maintainer was unable to react to the policy violation prior to the 
 This submission addresses the above violation and makes some additional minor improvements.
 
 ## Test environments
-- local R installation, R 4.0.1
 - R-hub windows-x86_64-devel (r-devel)
 - R-hub ubuntu-gcc-release (r-release)
 - R-hub fedora-clang-devel (r-devel)
@@ -18,9 +17,9 @@ This submission addresses the above violation and makes some additional minor im
 ## R CMD check results
 > On windows-x86_64-devel (r-devel), ubuntu-gcc-release (r-release), fedora-clang-devel (r-devel)
   checking CRAN incoming feasibility ... NOTE
+  Maintainer: 'Nicholas Fraser <nicholasmfraser@gmail.com>'
   
   Package was archived on CRAN
-  New submission
   
   Possibly mis-spelled words in DESCRIPTION:
     preprints (9:29, 10:5)
@@ -28,10 +27,9 @@ This submission addresses the above violation and makes some additional minor im
   CRAN repository db overrides:
     X-CRAN-Comment: Archived on 2021-02-28 for policy violation.
   
-  Maintainer: 'Nicholas Fraser <nicholasmfraser@gmail.com>'
+  New submission
     On Internet access.
 
 0 errors √ | 0 warnings √ | 1 note x
-
 
 
