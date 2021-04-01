@@ -19,6 +19,8 @@ This submission addresses the above violation and makes some additional minor im
   checking CRAN incoming feasibility ... NOTE
   Maintainer: 'Nicholas Fraser <nicholasmfraser@gmail.com>'
   
+  New submission
+  
   Package was archived on CRAN
   
   Possibly mis-spelled words in DESCRIPTION:
@@ -27,9 +29,10 @@ This submission addresses the above violation and makes some additional minor im
   CRAN repository db overrides:
     X-CRAN-Comment: Archived on 2021-02-28 for policy violation.
   
-  New submission
     On Internet access.
 
 0 errors √ | 0 warnings √ | 1 note x
+
+- The note refers to a mis-spelled word ("preprints") which has been checked and is correctly spelled.
 
 
