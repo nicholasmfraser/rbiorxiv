@@ -1,4 +1,4 @@
-## medrxiv 0.2.1
+## rbiorxiv 0.2.1
 
 ### Minor changes:
 
