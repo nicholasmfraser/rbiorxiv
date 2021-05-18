@@ -1,3 +1,9 @@
+## rbiorxiv 0.2.2
+
+### Minor changes:
+
+* Fixed failing test due to new "jatsxml" column returned from "details" API endpoint
+
 ## rbiorxiv 0.2.1
 
 ### Minor changes:

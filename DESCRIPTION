@@ -1,7 +1,7 @@
 Package: rbiorxiv
 Type: Package
 Title: Client for the 'bioRxiv' API
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: c(person("Nicholas", "Fraser", email = "nicholasmfraser@gmail.com",
                     role = c("aut", "cre")))
 Description: R client for interacting with the 'bioRxiv' API

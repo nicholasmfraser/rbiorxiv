@@ -146,6 +146,7 @@ set_column_types <- function(df) {
     "biorxiv_doi",
     "category",
     "doi",
+    "jatsxml",
     "license",
     "preprint_category",
     "preprint_title",

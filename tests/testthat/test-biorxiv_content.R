@@ -28,7 +28,7 @@ test_that("biorxiv_content returns", {
   # Column names and types for data frame
   col_names <- c("doi", "title", "authors", "author_corresponding",
                  "author_corresponding_institution", "date", "version", "type",
-                 "license", "category", "abstract", "published", "server")
+                 "license", "category", "jatsxml", "abstract", "published", "server")
   d <- biorxiv_content(doi = "10.1101/673665", format = "df")
   expect_named(d, col_names)
   expect_is(d$doi, "character")
@@ -40,6 +40,7 @@ test_that("biorxiv_content returns", {
   expect_is(d$version, "numeric")
   expect_is(d$type, "character")
   expect_is(d$category, "character")
+  expect_is(d$jatsxml, "character")
   expect_is(d$abstract, "character")
   expect_is(d$published, "character")
   expect_is(d$license, "character")
